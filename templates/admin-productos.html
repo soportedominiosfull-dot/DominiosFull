@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos | DominiosFull</title>
+    
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Panel de administración para la gestión de productos, métricas de ventas y ofertas promocionales en DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/admin-productos">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/admin-productos">
+    <meta property="og:title" content="DominiosFull - Admin - Gestión de Productos">
+    <meta property="og:description" content="Panel de control para la configuración de precios, catálogo y ofertas de dominios, hosting y VPS.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Gestión de Productos">
+    <meta name="twitter:description" content="Panel de control para la configuración de precios, catálogo y ofertas de dominios, hosting y VPS.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Botón para alternar el menú desplegable lateral -->
+    <button class="menu-toggle" id="btnMenu" aria-label="Abrir o cerrar menú lateral">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="admin-panel">
+        <!-- Barra lateral de navegación principal -->
+        <aside class="sidebar" id="sidebar">
+            <h2 aria-label="Panel Administrativo DominiosFull">Panel Administrativo DominiosFull</h2>
+            <nav role="navigation" aria-label="Navegación del panel administrativo">
+                <a href="/admin-inicio" aria-label="Ir a Inicio">Inicio</a>
+                <a href="/admin-clientes.servicios" aria-label="Ir a Clientes y Servicios">Clientes y Servicios</a>
+                <a href="/admin-productos" class="active" aria-label="Sección actual: Gestión de productos y ofertas">Gestión de productos</a>
+                <a href="/admin-opiniones" aria-label="Ir a Gestión de opiniones">Gestión de opiniones</a>
+                <a href="/" aria-label="Volver a la Página Web principal">Volver a la Página Web</a>
+                <a href="{{ url_for('logout') }}" aria-label="Cerrar Sesión administrativa">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Área de contenido principal -->
+        <main class="main-content" role="main">
+            <header>
+                <h1 aria-label="Gestión de Productos">Gestión de Productos</h1>
+            </header>
+
+            <section class="productos-mas-vendidos" aria-labelledby="titulo-mas-vendidos">
+                <div class="productos-mas-vendidos__encabezado">
+                    <div>
+                        <span class="productos-mas-vendidos__etiqueta">Indicador comercial</span>
+                        <h2 id="titulo-mas-vendidos">Productos más vendidos</h2>
+                        <p>Ranking según compras registradas e ingresos acumulados.</p>
+                    </div>
+                    <span class="productos-mas-vendidos__icono" aria-hidden="true">★</span>
+                </div>
+
+                {% if productos_mas_vendidos %}
+                    <div class="productos-mas-vendidos__lista">
+                        {% for producto in productos_mas_vendidos %}
+                            <article class="producto-mas-vendido">
+                                <span class="producto-mas-vendido__posicion" aria-label="Posición {{ loop.index }}">{{ loop.index }}</span>
+                                <div class="producto-mas-vendido__datos">
+                                    <strong>{{ producto[0] }}</strong>
+                                    <span>{{ producto[1]|capitalize }}</span>
+                                </div>
+                                <div class="producto-mas-vendido__metricas">
+                                    <strong>{{ producto[2] }} {{ 'compra' if producto[2] == 1 else 'compras' }}</strong>
+                                    <span>${{ producto[3] }} COP acumulados</span>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="productos-mas-vendidos__vacio" aria-label="Estado de ventas: Sin registros">Todavía no hay compras registradas.</p>
+                {% endif %}
+            </section>
+
+            <section class="productos-mas-vendidos productos-menos-vendidos" aria-labelledby="titulo-menos-vendidos">
+                <div class="productos-mas-vendidos__encabezado">
+                    <div>
+                        <span class="productos-mas-vendidos__etiqueta">Oportunidad comercial</span>
+                        <h2 id="titulo-menos-vendidos">Productos menos vendidos</h2>
+                        <p>Productos con menor cantidad de compras registradas.</p>
+                    </div>
+                    <span class="productos-mas-vendidos__icono" aria-hidden="true">↓</span>
+                </div>
+
+                {% if productos_menos_vendidos %}
+                    <div class="productos-mas-vendidos__lista">
+                        {% for producto in productos_menos_vendidos %}
+                            <article class="producto-mas-vendido">
+                                <span class="producto-mas-vendido__posicion" aria-label="Posición {{ loop.index }}">{{ loop.index }}</span>
+                                <div class="producto-mas-vendido__datos">
+                                    <strong>{{ producto[0] }}</strong>
+                                    <span>{{ producto[1]|capitalize }}</span>
+                                </div>
+                                <div class="producto-mas-vendido__metricas">
+                                    <strong>{{ producto[2] }} {{ 'compra' if producto[2] == 1 else 'compras' }}</strong>
+                                    <span>${{ producto[3] }} COP acumulados</span>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="productos-mas-vendidos__vacio" aria-label="Estado de inventario: Sin registros para analizar">No hay productos registrados para analizar.</p>
+                {% endif %}
+            </section>
+
+            <!-- Contenedor dinámico de alertas y mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="toast-container">
+                        {% for category, message in messages %}
+                        <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- TABLA 1: DOMINIOS -->
+            <section class="tabla-datos">
+                <h3 aria-label="Sección Ofertas de Dominios">Ofertas en Dominios</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Producto">Producto</th>
+                            <th aria-label="Columna Precio Real">Precio Real</th>
+                            <th aria-label="Columna Precio Oferta">Precio Oferta</th>
+                            <th aria-label="Columna Expiración">Expiración</th>
+                            <th aria-label="Columna Lanzar Oferta">Lanzar Oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if dominios %}
+                            {% for d in dominios %}
+                                <tr>
+                                    <td>{{ d[0] }}</td>
+                                    <td>{{ d[1] }}</td>
+                                    <td>${{ d[3] }} COP</td>
+                                    <td>
+                                        {% if d[4] %}
+                                            <span class="texto-oferta-activa">${{ d[4] }} COP</span>
+                                        {% else %}
+                                            <span class="texto-sin-oferta">Sin Oferta</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if d[5] %}
+                                            <span class="badge-tiempo">Expira: {{ d[5] }}</span>
+                                        {% else %}
+                                            <span class="badge-inactivo">Inactiva</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form action="{{ url_for('servicios.crear_oferta') }}" method="POST" class="form-crear-oferta">
+                                            <input type="hidden" name="producto_id" value="{{ d[0] }}">
+                                            <input type="number" step="0.01" name="precio_oferta" placeholder="Oferta" required class="input-oferta" aria-label="Precio de oferta para {{ d[1] }}">
+                                            <input type="number" name="minutos" placeholder="Minutos" required class="input-minutos" aria-label="Duración en minutos para oferta de {{ d[1] }}">
+                                            <button type="submit" class="boton-cambiar" aria-label="Activar oferta para {{ d[1] }}">Activar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" aria-label="Sin dominios registrados">No hay dominios registrados</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TABLA 2: HOSTING -->
+            <section class="tabla-datos">
+                <h3 aria-label="Sección Ofertas de Hosting">Ofertas en Hosting</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Producto">Producto</th>
+                            <th aria-label="Columna Precio Real">Precio Real</th>
+                            <th aria-label="Columna Precio Oferta">Precio Oferta</th>
+                            <th aria-label="Columna Expiración">Expiración</th>
+                            <th aria-label="Columna Lanzar Oferta">Lanzar Oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if hostings %}
+                            {% for h in hostings %}
+                                <tr>
+                                    <td>{{ h[0] }}</td>
+                                    <td>{{ h[1] }}</td>
+                                    <td>${{ h[3] }} COP</td>
+                                    <td>
+                                        {% if h[4] %}
+                                            <span class="texto-oferta-activa">${{ h[4] }} COP</span>
+                                        {% else %}
+                                            <span class="texto-sin-oferta">Sin Oferta</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if h[5] %}
+                                            <span class="badge-tiempo">Expira: {{ h[5] }}</span>
+                                        {% else %}
+                                            <span class="badge-inactivo">Inactiva</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form action="{{ url_for('servicios.crear_oferta') }}" method="POST" class="form-crear-oferta">
+                                            <input type="hidden" name="producto_id" value="{{ h[0] }}">
+                                            <input type="number" step="0.01" name="precio_oferta" placeholder="Oferta" required class="input-oferta" aria-label="Precio de oferta para {{ h[1] }}">
+                                            <input type="number" name="minutos" placeholder="Minutos" required class="input-minutos" aria-label="Duración en minutos para oferta de {{ h[1] }}">
+                                            <button type="submit" class="boton-cambiar" aria-label="Activar oferta para {{ h[1] }}">Activar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" aria-label="Sin planes de hosting registrados">No hay planes de hosting registrados</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TABLA 3: VPS -->
+            <section class="tabla-datos">
+                <h3 aria-label="Sección Ofertas de VPS">Ofertas en VPS</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Producto">Producto</th>
+                            <th aria-label="Columna Precio Real">Precio Real</th>
+                            <th aria-label="Columna Precio Oferta">Precio Oferta</th>
+                            <th aria-label="Columna Expiración">Expiración</th>
+                            <th aria-label="Columna Lanzar Oferta">Lanzar Oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if vps %}
+                            {% for v in vps %}
+                                <tr>
+                                    <td>{{ v[0] }}</td>
+                                    <td>{{ v[1] }}</td>
+                                    <td>${{ v[3] }} COP</td>
+                                    <td>
+                                        {% if v[4] %}
+                                            <span class="texto-oferta-activa">${{ v[4] }} COP</span>
+                                        {% else %}
+                                            <span class="texto-sin-oferta">Sin Oferta</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if v[5] %}
+                                            <span class="badge-tiempo">Expira: {{ v[5] }}</span>
+                                        {% else %}
+                                            <span class="badge-inactivo">Inactiva</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form action="{{ url_for('servicios.crear_oferta') }}" method="POST" class="form-crear-oferta">
+                                            <input type="hidden" name="producto_id" value="{{ v[0] }}">
+                                            <input type="number" step="0.01" name="precio_oferta" placeholder="Oferta" required class="input-oferta" aria-label="Precio de oferta para {{ v[1] }}">
+                                            <input type="number" name="minutos" placeholder="Minutos" required class="input-minutos" aria-label="Duración en minutos para oferta de {{ v[1] }}">
+                                            <button type="submit" class="boton-cambiar" aria-label="Activar oferta para {{ v[1] }}">Activar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" aria-label="Sin servidores VPS registrados">No hay servidores VPS registrados</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Pie de página informativo -->
+    <footer class="footer-admin">
+        <div class="footer-izquierda">
+            <p aria-label="Copyright 2026 SoftNova, Panel de Administración">© 2026 <strong>SoftNova</strong> | Panel de Administración</p>
+        </div>
+        <div class="footer-derecha">
+            <span class="version" aria-label="Versión del sistema 1.0">Versión 1.0</span>
+            <span class="separador">|</span>
+            <span class="estado" aria-label="Estado del Sistema: Online"><i class="punto-verde"></i> Sistema Online</span>
+        </div>
+    </footer>
+
+    <!-- Carga diferida de scripts para mejorar el rendimiento -->
+    <script src="../static/js/admin.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

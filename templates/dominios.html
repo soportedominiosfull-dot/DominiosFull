@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar Dominios Web Económicos y Registro Fácil | DominiosFull</title>
+    <meta name="description" content="Encuentra y registra tu dominio web al mejor precio en DominiosFull. Extensiones .com, .net, .co y más con activación inmediata y protección garantizada.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/dominios">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/dominios">
+    <meta property="og:title" content="Comprar Dominios Web Económicos y Registro Fácil | DominiosFull">
+    <meta property="og:description" content="Encuentra y registra tu dominio web al mejor precio. Extensiones .com, .net, .co y más con activación inmediata.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comprar Dominios Web Económicos | DominiosFull">
+    <meta name="twitter:description" content="Encuentra y registra tu dominio web al mejor precio con activación inmediata.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+    <header class="navbar">        
+        <a href="/" aria-label="Ir a la página de inicio">
+            <img src="/static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
+        </a>
+
+        <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú de navegación">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="navMenu" aria-label="Navegación principal">
+            <a href="/">Inicio</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/dominios" class="active" aria-current="page">Dominios</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/hosting">Hosting</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/vps">VPS</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/soporte">Contacto</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            
+            {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
+            {% set nombre_usuario = nombre or session.get('nombre') %}
+
+            {% if nombre_usuario %}
+                <div class="usuario-dropdown">
+                    <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
+                        {{ nombre_usuario }} 
+                        <span class="role-badge">
+                            {% if rol_limpio == 'superadmin' %}
+                                Super Admin
+                            {% elif rol_limpio == 'admin' %}
+                                Admin
+                            {% else %}
+                                Cliente
+                            {% endif %}
+                        </span> ▾
+                    </button>
+                    <div id="usuarioMenu" class="usuario-menu" role="menu" aria-label="Menú de usuario">
+                        {% if rol_limpio in ['admin', 'superadmin'] %}
+                            <a href="{{ url_for('admin_inicio') }}" role="menuitem">Panel Admin</a>
+                        {% else %}
+                            <a href="{{ url_for('vista_clientes') }}" role="menuitem">Mi perfil</a>
+                        {% endif %}
+                        <a href="{{ url_for('logout') }}" role="menuitem">Cerrar Sesión</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </nav>                                                
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="toast-container">
+                {% for category, message in messages %}
+                <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+
+        <section class="hero">
+            <h2>¡Encuentra tu mejor dominio!</h2>
+            <p>Dominios para todos, al mejor precio, y de tu preferencia.</p>
+        </section>
+
+        <section class="info-dominios">
+            <div class="explicacion-caja">
+                <h2>¿Qué es un dominio web?</h2>
+                <p>
+                    Un dominio es la identidad única de tu marca en el mundo digital; funciona como la dirección postal de tu negocio, 
+                    permitiendo que tus clientes te encuentren de forma rápida y sencilla al escribir tu nombre en el navegador. 
+                    Contar con un dominio propio no solo facilita tu accesibilidad en la red, sino que otorga profesionalismo y 
+                    seguridad a tu presencia online.
+                </p>
+            </div>
+        </section>
+
+        <section class="seccion-dominios">
+            <h2 class="titulo-seccion">Nuestras extensiones disponibles</h2>
+            <div class="filtros">
+                <button class="btn-filtro activo" onclick="filtrar('popular', this)" aria-label="Filtrar dominios populares">Populares</button>
+                <button class="btn-filtro" onclick="filtrar('todos', this)" aria-label="Ver todos los dominios">Todos</button>
+                <label class="filtro-orden" for="ordenar-dominios">
+                    <span>Ordenar por</span>
+                    <select id="ordenar-dominios" onchange="ordenarDominios(this.value)">
+                        <option value="default">Predeterminado</option>
+                        <option value="precio-asc">Precio (Ascendente)</option>
+                        <option value="precio-desc">Precio (Descendente)</option>
+                        <option value="nombre-asc">Nombre de A a la Z</option>
+                        <option value="nombre-desc">Nombre de Z a la A</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="lista-dominios" id="lista-dominios">
+                {% if dominios %}
+                    {% for d in dominios %}
+                        <div class="fila-dominio {% if loop.index <= 8 %}popular{% endif %}"
+                             data-precio="{{ d[3] if d[3] is not none else d[2] }}"
+                             data-nombre="{{ d[1] }}">
+                            <div class="nombre">
+                                {{ d[1] }}
+                                {% if d[1] in productos_destacados.dominio %}
+                                    <span class="badge-producto-destacado">Producto destacado</span>
+                                {% endif %}
+                                {% if d[3] is not none %}
+                                    <span class="badge-oferta">¡OFERTA!</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="precio">
+                                {% if d[3] is not none %}
+                                    <span class="precio-original-tachado" aria-label="Precio original {{ d[2] }} pesos">${{ "{:,.0f}".format(d[2]) }}</span>
+                                    <span class="precio-oferta-destacado" aria-label="Precio de oferta {{ d[3] }} pesos">${{ "{:,.0f}".format(d[3]) }}</span>
+                                {% else %}
+                                    <span>${{ "{:,.0f}".format(d[2]) }}</span>
+                                {% endif %}
+                                <small>/ 1 Año</small>
+                            </div>
+
+                            {% if rol_limpio in ['admin', 'superadmin'] %}
+                                <a href="/agregar/{{ d[0] }}" class="btn-carrito admin-disabled" aria-disabled="true">
+                                    No disponible para Admin
+                                </a>
+                            {% else %}
+                                <a href="/agregar/{{ d[0] }}" class="btn-carrito" aria-label="Añadir {{ d[1] }} al carrito">
+                                    Añadir al carrito 🛒
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="fila-dominio sin-dominios">
+                        <div class="nombre">No hay dominios disponibles registrados.</div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="beneficios-seccion">
+            <h2 class="titulo-beneficios">¿Por qué elegir nuestros Dominios?</h2>
+
+            <div class="beneficios">
+                <div class="beneficio-item">
+                    <span class="icon" aria-hidden="true">⚡</span>
+                    <h3>Todo carga rápido</h3>
+                    <p>Tus cambios se activan de inmediato en todo el mundo. Tu web estará lista y funcionando en un abrir y cerrar de ojos.</p>
+                </div>
+                <div class="beneficio-item">
+                    <span class="icon" aria-hidden="true">🛡️</span>
+                    <h3>Tu información segura</h3>
+                    <p>Mantenemos tus datos privados y protegemos tu dominio para que nadie más pueda llevárselo. Tu nombre es solo tuyo.</p>
+                </div>
+                <div class="beneficio-item">
+                    <span class="icon" aria-hidden="true">🛠️</span>
+                    <h3>Control súper fácil</h3>
+                    <p>Gestionar tu dominio no tiene por qué ser difícil. Con nuestro panel, haces cambios en segundos, sin complicaciones técnicas.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>DominiosFull</h3>
+                <p>"Conectamos tu marca con el mundo digital."</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="/terminos">Términos de servicio</a></li>
+                    <li><a href="/privacidad">Privacidad y Protección de Datos</a></li>
+                    <li><a href="/soporte">Soporte Técnico</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><a href="mailto:soporte.dominiosfull@gmail.com">soporte.dominiosfull@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="Whatsapp">
+            <button class="Whatsapp-desplegable" aria-label="Abrir canales de atención de WhatsApp">
+                <img src="/static/img/whatsapp.png" width="100" height="100" alt="Logo de WhatsApp" loading="lazy">
+            </button>
+            <div class="Whatsapp-menu">
+                <a href="https://wa.me/+573172293270" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Atención al Cliente en WhatsApp"><p>Atención al Cliente</p></a>
+                <a href="https://wa.me/+573112913437" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Soporte Técnico en WhatsApp"><p>Soporte Técnico</p></a>
+                <a href="https://wa.me/+573147991338" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Marketing en WhatsApp"><p>Marketing</p></a>
+                <a href="https://wa.me/+573134138186" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Ventas en WhatsApp"><p>Respuesta Rápida</p></a>
+            </div>
+        </div>
+        
+        <div class="Instagram">
+            <a href="https://www.instagram.com/dominios_full/" target="_blank" rel="noopener noreferrer" aria-label="Ir a nuestro perfil de Instagram">
+                <img src="/static/img/instagram.png" width="100" height="100" alt="Logo de Instagram" loading="lazy">
+            </a>
+        </div>
+        
+        <div class="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61572556859420" target="_blank" rel="noopener noreferrer" aria-label="Ir a nuestro perfil de Facebook">
+                <img src="/static/img/facebook.png" width="100" height="100" alt="Logo de Facebook" loading="lazy">
+            </a>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2026 SoftNova. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/menu.js" defer></script>
+    <script src="/static/js/talkback.js" defer></script>
+    <script src="/static/js/usuario-menu.js" defer></script>
+    <script src="/static/js/whatsapp.js" defer></script>
+    <script src="/static/js/dominios.js" defer></script>
+    <script src="/static/js/anuncio-carrito.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

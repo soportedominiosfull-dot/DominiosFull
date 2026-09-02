@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título y Meta Descripción SEO (Privada / Checkout) -->
+    <title>Finalizar Pago | DominiosFull</title>
+    <meta name="description" content="Completa tu pedido de forma segura en DominiosFull. Aceptamos tarjetas de crédito, débito, Nequi, Daviplata y PayPal.">
+    
+    <!-- Bloqueo estricto de indexación y seguimiento en motores de búsqueda -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/pago">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/pago">
+    <meta property="og:title" content="Finalizar Pago | DominiosFull">
+    <meta property="og:description" content="Proceso de pago seguro para confirmar tus servicios web en DominiosFull.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Finalizar Pago | DominiosFull">
+    <meta name="twitter:description" content="Proceso de pago seguro para confirmar tus servicios web en DominiosFull.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="/" aria-label="Ir al inicio">
+        <img src="../static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
+    </a>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="toast-container" aria-live="polite" aria-atomic="true">
+            {% for category, message in messages %}
+                <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<section class="hero">
+    <h2>Finaliza tu Pago</h2>
+    <p>Gracias por tu compra. A continuación, realiza el pago para confirmar tu pedido.</p>
+</section>
+
+<section class="carrito-container">
+    <div class="carrito-card">
+        {% if compra_confirmada %}
+            <h3>¡Compra confirmada!</h3>
+            <p>Tu pedido fue registrado correctamente.</p>
+            <p><strong>Método de pago:</strong> {{ metodo_pago|title }}</p>
+            <p><strong>Teléfono:</strong> {{ telefono }}</p>
+            {% if metodo_pago in ['debito', 'credito'] %}
+                <p><strong>Datos de tarjeta:</strong> ingresados correctamente</p>
+            {% endif %}
+            <a href="/" class="btn-comprar btn-pago-link">Volver al inicio</a>
+        {% else %}
+            <h3>Proceso de compra</h3>
+            <p class="paso-indicador">Paso 1 · Datos del cliente</p>
+
+            <form method="post" action="/pago" class="form-pago">
+                <label for="telefono" class="label-pago">Teléfono</label>
+                <input id="telefono" name="telefono" type="tel" class="input-pago" placeholder="Ej. 3001234567" value="{{ telefono or '' }}" required maxlength="10" inputmode="numeric">
+
+                <label for="direccion" class="label-pago">Dirección</label>
+                <input id="direccion" name="direccion" type="text" class="input-pago" placeholder="Calle 123 #45-67, Ciudad" value="{{ direccion or '' }}" required maxlength="200">
+
+                <p class="paso-indicador">Paso 2 · Método de pago</p>
+
+                <div class="metodos-pago">
+                    <label class="metodo-option metodo-paypal">
+                        <input type="radio" name="metodo_pago" value="paypal" {% if metodo_pago == 'paypal' %}checked{% endif %}>
+                        <span>PayPal</span>
+                    </label>
+                    <label class="metodo-option metodo-nequi">
+                        <input type="radio" name="metodo_pago" value="nequi" {% if metodo_pago == 'nequi' %}checked{% endif %}>
+                        <span>Nequi</span>
+                    </label>
+                    <label class="metodo-option metodo-daviplata">
+                        <input type="radio" name="metodo_pago" value="daviplata" {% if metodo_pago == 'daviplata' %}checked{% endif %}>
+                        <span>Daviplata</span>
+                    </label>
+                    <label class="metodo-option metodo-card">
+                        <input type="radio" name="metodo_pago" value="debito" {% if metodo_pago == 'debito' %}checked{% endif %}>
+                        <span>Débito</span>
+                    </label>
+                    <label class="metodo-option metodo-card">
+                        <input type="radio" name="metodo_pago" value="credito" {% if metodo_pago == 'credito' %}checked{% endif %}>
+                        <span>Crédito</span>
+                    </label>
+                </div>
+
+                <div id="datos-tarjeta" class="datos-pago" {% if metodo_pago not in ['debito', 'credito'] %}style="display: none;"{% endif %}>
+                    <p class="paso-indicador">Datos de la tarjeta</p>
+                    <div class="grid-tarjeta">
+                        <div class="campo-tarjeta">
+                            <label for="numero_tarjeta" class="label-pago">Número de tarjeta</label>
+                            <input id="numero_tarjeta" name="numero_tarjeta" class="input-pago" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" value="{{ numero_tarjeta or '' }}" maxlength="19" pattern="[0-9 ]{13,19}">
+                        </div>
+                        <div class="campo-tarjeta">
+                            <label for="nombre_titular" class="label-pago">Nombre del titular</label>
+                            <input id="nombre_titular" name="nombre_titular" class="input-pago" type="text" autocomplete="cc-name" placeholder="Nombre completo" value="{{ nombre_titular or '' }}">
+                        </div>
+                        <div class="campo-tarjeta">
+                            <label for="fecha_vencimiento" class="label-pago">Fecha de vencimiento</label>
+                            <input id="fecha_vencimiento" name="fecha_vencimiento" class="input-pago" type="text" placeholder="MM/AA" value="{{ fecha_vencimiento or '' }}" maxlength="5" pattern="^(0[1-9]|1[0-2])\/(?:[0-9]{2})$">
+                        </div>
+                        <div class="campo-tarjeta">
+                            <label for="codigo_seguridad" class="label-pago">Código de seguridad</label>
+                            <input id="codigo_seguridad" name="codigo_seguridad" class="input-pago" type="password" inputmode="numeric" placeholder="CVV" value="{{ codigo_seguridad or '' }}" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayPal -->
+                <div id="datos-paypal" class="datos-pago" {% if metodo_pago != 'paypal' %}style="display: none;"{% endif %}>
+                    <p class="paso-indicador">Pago con PayPal</p>
+                    <label for="paypal_email" class="label-pago">Correo PayPal</label>
+                    <input id="paypal_email" name="paypal_email" class="input-pago" type="email" placeholder="tu-email@ejemplo.com" value="{{ paypal_email or '' }}" maxlength="254">
+                    <label for="paypal_txn" class="label-pago">ID de transacción (opcional)</label>
+                    <input id="paypal_txn" name="paypal_txn" class="input-pago" type="text" placeholder="Ej. 8YH12345..." value="{{ paypal_txn or '' }}" maxlength="64">
+                    <p class="label-pago">Al confirmar se te redirigirá a PayPal para completar el pago o podrás ingresar el ID de la transacción si ya pagaste.</p>
+                </div>
+
+                <!-- Nequi -->
+                <div id="datos-nequi" class="datos-pago" {% if metodo_pago != 'nequi' %}style="display: none;"{% endif %}>
+                    <p class="paso-indicador">Pago con Nequi</p>
+                    <label for="nequi_phone" class="label-pago">Teléfono asociado a Nequi</label>
+                    <input id="nequi_phone" name="nequi_phone" class="input-pago" type="tel" inputmode="numeric" placeholder="3001234567" value="{{ nequi_phone or '' }}" maxlength="10">
+                    <label for="nequi_ref" class="label-pago">Referencia/ID transacción</label>
+                    <input id="nequi_ref" name="nequi_ref" class="input-pago" type="text" placeholder="Ej. 123456" value="{{ nequi_ref or '' }}" maxlength="12">
+                    <p class="label-pago">Envía el pago desde tu app Nequi y pega aquí la referencia o el número de confirmación.</p>
+                </div>
+
+                <!-- Daviplata -->
+                <div id="datos-daviplata" class="datos-pago" {% if metodo_pago != 'daviplata' %}style="display: none;"{% endif %}>
+                    <p class="paso-indicador">Pago con Daviplata</p>
+                    <label for="davi_phone" class="label-pago">Teléfono Daviplata</label>
+                    <input id="davi_phone" name="davi_phone" class="input-pago" type="tel" inputmode="numeric" placeholder="3001234567" value="{{ davi_phone or '' }}" maxlength="10">
+                    <label for="davi_ref" class="label-pago">Referencia/ID transacción</label>
+                    <input id="davi_ref" name="davi_ref" class="input-pago" type="text" placeholder="Ej. 20230456" value="{{ davi_ref or '' }}" maxlength="12">
+                    <p class="label-pago">Envía el pago desde Daviplata y pega aquí la referencia o comprobante.</p>
+                </div>
+
+                <div class="resumen-pago">
+                    <p><strong>Subtotal:</strong> $ {{ "{:,.0f}".format(subtotal|default(0)) }}</p>
+                    <p><strong>IVA (19%):</strong> $ {{ "{:,.0f}".format(iva|default(0)) }}</p>
+                    <p><strong>Total:</strong> $ {{ "{:,.0f}".format(total|default(0)) }}</p>
+                </div>
+
+                <p class="paso-indicador">Paso 3 · Confirmación</p>
+                <button type="submit" class="btn-comprar">Confirmar compra</button>
+            </form>
+
+            <br>
+            <a href="/carrito" class="link-volver-pago" aria-label="Volver al carrito">← Volver al carrito</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Scripts de funcionalidad externa -->
+<script src="../static/js/talkback.js" defer></script>
+<script src="../static/js/pago.js" defer></script>
+</body>
+</html>

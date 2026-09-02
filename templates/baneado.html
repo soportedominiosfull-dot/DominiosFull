@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Restringido | DominiosFull</title>
+
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Página de aviso para cuentas suspendidas o restringidas en DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/baneado">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/baneado">
+    <meta property="og:title" content="DominiosFull - Admin - Acceso Restringido">
+    <meta property="og:description" content="Aviso de suspensión de privilegios administrativos.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Acceso Restringido">
+    <meta name="twitter:description" content="Aviso de suspensión de privilegios administrativos.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <main class="container-baneado" role="main" aria-label="Contenedor de aviso de cuenta suspendida">
+        <div class="icono-bloqueo" aria-hidden="true">🚫</div>
+        
+        <h1>Tu cuenta ha sido suspendida</h1>
+        
+        <p class="texto-suspendido-detalle">
+            Lo sentimos, el acceso a tu cuenta en <strong>DominiosFull</strong> ha sido temporalmente restringido por la administración debido a infracciones en los términos del servicio o falta de pago.
+        </p>
+        
+        <p class="texto-suspendido-info">
+            Se ha enviado un correo electrónico con los detalles y la justificación correspondiente.
+        </p>
+        
+        <a href="{{ url_for('logout') }}" class="btn-regresar" aria-label="Volver al Inicio y cerrar sesión">Volver al Inicio</a>
+    </main>
+
+    <!-- Script diferido para evitar el bloqueo del renderizado HTML -->
+    <script src="../static/js/talkback.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,4098 @@
+/* ==========================================================================
+   1. INICIO - ESTILOS BASE Y PÁGINA INDEX
+   ========================================================================== */
+
+/* --- 1.1 Variables Globales --- */
+:root {
+    --color-primary: #3E7AD9;
+    --color-primary-hover: #2B5FAE;
+    --color-bg-body: #f4f4f4;
+    --color-bg-footer: #2A3F5F;
+    --color-text-dark: #333333;
+    --color-white: #ffffff;
+    --font-main: 'Segoe UI', Arial, sans-serif;
+    --transition-fast: all 0.3s ease;
+}
+
+/* --- 1.2 Resets y Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+html, body {
+    position: relative;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-bg-body);
+}
+
+/* --- 1.3 Navbar Header --- */
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 10px 50px;
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.navbar img {
+    display: block;
+    width: auto;
+    height: 55px;
+}
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar nav a {
+    display: inline-block;
+    margin-left: 1px;
+    padding: 5px 10px;
+    color: var(--color-white);
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.navbar nav a:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+.navbar nav a.active {
+    background: var(--color-primary-hover);
+    color: var(--color-white);
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.separadorindex {
+    margin: 5px;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: default;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-white);
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .separadorindex {
+        display: none;
+    }
+
+    .navbar nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--color-primary);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px 20px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .navbar nav.active {
+        display: flex !important;
+    }
+}
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-white);
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex !important;
+    }
+
+    .separadorindex {
+        display: none !important;
+    }
+
+    .navbar nav {
+        display: flex !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--color-primary);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px 20px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-15px);
+        pointer-events: none; 
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .navbar nav.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .navbar nav a {
+        margin: 4px 0;
+        padding: 10px;
+    }
+
+    .usuario-dropdown {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .usuario-btn {
+        width: 100%;
+        text-align: left;
+    }
+    }
+    
+    .navbar nav.active {
+        display: flex !important;
+    }
+
+    .navbar nav a {
+        margin: 4px 0;
+        padding: 10px;
+    }
+
+    .usuario-dropdown {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .usuario-btn {
+        width: 100%;
+        text-align: left;
+    }
+    .cart-link {
+        white-space: nowrap; 
+        display: inline-flex;
+        align-items: center;
+        gap: 6px; 
+    }
+
+/* --- 1.4 Hero y Carrusel (Slider) --- */
+.hero {
+    padding: 60px 20px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    text-align: center;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+}
+
+.slide.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    max-width: 500px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-align: left;
+    transform: translateY(-50%);
+    z-index: 2;
+    will-change: transform;
+}
+
+.info h2 {
+    margin-bottom: 15px;
+    color: var(--color-white);
+    font-size: 2.5rem;
+}
+
+.info p {
+    margin-bottom: 20px;
+    color: #eeeeee;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.info a {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.info a:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.flecha {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    background: none;
+    color: var(--color-white);
+    border: none;
+    border-radius: 10px;
+    font-size: 40px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: var(--transition-fast);
+    z-index: 3;
+}
+
+.flecha:hover {
+    background: rgba(0, 0, 0, 0.753);
+}
+
+.izquierda { left: 10px; }
+.derecha { right: 10px; }
+
+/* --- 1.5 Tarjetas de Servicios --- */
+.servicios {
+    padding: 40px 20px;
+}
+
+.servicios h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card1, .card2, .card3 {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    padding: 25px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.card1:hover, .card2:hover, .card3:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-5px);
+}
+
+.card-dm, .card-ht, .card-vps {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.card1:hover .card-dm, 
+.card2:hover .card-ht,
+.card3:hover .card-vps {
+    opacity: 1.25;
+}
+
+.card2 a, .card3 a, .card-link {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.card-link {
+    display: flex;
+}
+
+/* --- 1.6 Sección Beneficios --- */
+.titulo-beneficios {
+    margin-bottom: 40px;
+    color: var(--color-text-dark);
+    text-align: center;
+}
+
+.beneficios {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.beneficio-item {
+    flex: 1;
+    max-width: 300px;
+}
+
+.beneficio-item h3 {
+    margin-bottom: 10px;
+    color: var(--color-text-dark);
+    font-size: 1.4rem;
+}
+
+.beneficio-item p {
+    color: #666666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.beneficio-item .icon {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 50px;
+    cursor: default;
+    transition: transform 0.3s ease;
+}
+
+.beneficio-item:hover .icon {
+    transform: scale(1.3);
+}
+
+/* --- 1.7 Carrusel de Reseñas y Testimonios --- */
+
+.seccion-opiniones {
+    padding: 60px 20px;
+    background-color: #f0f4f9;
+    text-align: center;
+}
+
+.titulo-opiniones {
+    margin-bottom: 30px;
+    color: #16306b;
+    font-size: 2rem;
+}
+
+.carrusel-opiniones-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carrusel-opiniones-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.tarjeta-opinion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    min-width: 280px;
+    max-width: 300px;
+    padding: 25px;
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    text-align: left;
+}
+
+.estrellas-display {
+    margin-bottom: 10px;
+    color: #ffca28;
+    font-size: 1.2rem;
+}
+
+.comentario-texto {
+    margin-bottom: 15px;
+    color: #444444;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.cliente-nombre {
+    color: #16306b;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.btn-ver-todas {
+    padding: 12px 25px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-ver-todas:hover {
+    background: var(--color-primary-hover);
+}
+
+/* --- 1.8 Modal de Filtro de Opiniones --- */
+
+.filtro-opiniones {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none !important;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 2000;
+}
+
+.filtro-opiniones.active {
+    display: flex !important;
+}
+
+.filtro-opiniones-contenido {
+    position: relative;
+    width: 90%;
+    max-width: 650px;
+    max-height: 80vh;
+    padding: 30px;
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    text-align: left;
+}
+
+.cerrar-filtro {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.cerrar-filtro:hover {
+    color: #000000;
+}
+
+.filtros-estrellas {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    padding: 6px 14px;
+    background: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-filtro.active, 
+.btn-filtro:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.lista-todas-opiniones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.item-opinion-filtro {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.header-opinion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.fecha-opinion {
+    color: #888888;
+    font-size: 0.8rem;
+}
+
+/* --- 1.9 Sección Soporte / Contacto --- */
+.contenedor-soporte {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+.contact-card {
+    max-width: 1000px;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border: 1px solid rgba(34, 88, 174, 0.06);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(10, 20, 50, 0.08);
+}
+
+.contact-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contact-title {
+    margin: 0;
+    color: #16306b;
+    font-size: 1.8rem;
+}
+
+.contact-sub {
+    margin-top: 8px;
+    color: #475569;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.contact-item {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(20, 40, 80, 0.04);
+    text-align: center;
+}
+
+.contact-icon {
+    margin-bottom: 10px;
+    font-size: 40px;
+}
+
+.contact-item h3 {
+    margin-bottom: 6px;
+    color: #16306b;
+}
+
+.contact-desc {
+    margin-bottom: 12px;
+    color: #555566;
+}
+
+.contact-action {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #0d6efd;
+    color: var(--color-white);
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.contact-action:hover {
+    background: #0b5ed7;
+}
+
+.whatsapp-link {
+    background: linear-gradient(90deg, #25D366, #128C7E);
+}
+
+.contenedor-ver-todas {
+    margin-top: 25px;
+    text-align: center;
+}
+
+/* --- 1.10 Footer y Redes Flotantes --- */
+footer {
+    margin-top: auto;
+    padding: 40px 5% 20px;
+    background: var(--color-bg-footer);
+    color: var(--color-white);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.copyright {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #F0EDED;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+footer a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    color: var(--color-white);
+    text-decoration: underline;
+}
+
+footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+footer .Whatsapp, 
+footer .Instagram, 
+footer .Facebook {
+    position: fixed;
+    right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px 30px;
+    color: var(--color-white);
+    z-index: 1000;
+}
+
+footer .Whatsapp { bottom: 20px; }
+footer .Instagram { bottom: 90px; }
+footer .Facebook { bottom: 160px; }
+
+footer .Whatsapp img, 
+footer .Instagram img, 
+footer .Facebook img {
+    width: 50px;
+    height: 50px;
+}
+
+footer .Whatsapp-menu {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    display: none;
+    padding: 15px;
+    background-color: var(--color-bg-footer);
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1020;
+}
+
+footer .Whatsapp-menu.active {
+    position: fixed;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 90px;
+    gap: 10px;
+}
+
+footer .Whatsapp-desplegable {
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* --- 1.11 Adaptación Responsive (Media Queries) --- */
+@media (max-width: 1024px) {
+    .navbar img {
+        width: 200px;
+        height: auto;
+    }
+
+    .info {
+        left: 5%;
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        justify-content: center !important;
+        height: auto;
+        padding: 15px 10px !important;
+    }
+
+    .navbar img {
+        position: relative !important;
+        display: block;
+        width: 150px !important;
+        height: auto !important;
+        margin: 0 auto 15px auto;
+    }
+
+    .navbar nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .navbar nav a {
+        margin: 5px 8px !important;
+        font-size: 0.9rem;
+    }
+
+    .slider {
+        height: 50vh;
+    }
+
+    .info {
+        top: 50%;
+        left: 50%;
+        width: 85%;
+        padding: 20px;
+        text-align: center;
+        transform: translate(-50%, -50%);
+    }
+
+    .info h2 { font-size: 1.6rem; }
+    .info p { font-size: 0.95rem; }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card1, .card2, .card3 {
+        width: 100%;
+        max-width: 320px;
+        transform: none !important;
+    }
+
+    .beneficios {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-card {
+        padding: 18px;
+    }
+
+    .contact-title {
+        font-size: 1.4rem;
+    }
+
+    footer .Facebook, 
+    footer .Instagram, 
+    footer .Whatsapp {
+        right: 15px !important;
+        padding: 0 !important;
+    }
+
+    footer .Facebook { bottom: 140px; }
+    footer .Instagram { bottom: 80px; }
+    footer .Whatsapp { bottom: 20px; }
+
+    footer .Facebook img, 
+    footer .Instagram img, 
+    footer .Whatsapp img {
+        width: 45px;
+        height: 45px;
+    }
+
+    footer .Facebook img:hover,
+    footer .Instagram img:hover,
+    footer .Whatsapp img:hover {
+        opacity: 0.9;
+        transform: translateY(-3px);
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero { padding: 40px 15px; }
+    .hero h2 { font-size: 1.4rem; }
+    .info h2 { font-size: 1.3rem; }
+}
+
+/* ==========================================================================
+   FIN - ESTILOS PÁGINA INDEX Y BASE
+   ========================================================================== */
+
+/* ==========================================================================
+   2. VISTA - PÁGINA DE DOMINIOS
+   ========================================================================== */
+
+/* --- 2.1 Tarjeta Informativa e Encabezados --- */
+.info-dominios {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.explicacion-caja {
+    background-color: #fff8eb; 
+    padding: 30px;
+    border-left: 6px solid var(--color-primary); 
+    border-radius: 10px;
+    max-width: 750px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explicacion-caja:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15); 
+    cursor: default;
+}
+
+.explicacion-caja h2 {
+    margin-top: 0;
+    color: var(--color-text-dark);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.explicacion-caja p {
+    font-size: 1.1rem;
+    color: #444444;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.titulo-seccion {
+    font-size: 2rem;
+    color: var(--color-text-dark);
+    margin-bottom: 30px; 
+    margin-top: 40px;    
+    text-align: center;
+    font-weight: 700;
+}
+
+/* --- 2.2 Lista y Filas de Dominios --- */
+.lista-dominios {
+    max-width: 750px; 
+    margin: 40px auto;
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.fila-dominio {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr; 
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.fila-dominio:last-child { 
+    border-bottom: none; 
+}
+
+.nombre { 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+}
+
+.nombre span {
+    background: #ff6b6b;
+    color: var(--color-white);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.precio { 
+    font-weight: 600; 
+    color: var(--color-text-dark); 
+    text-align: right;
+    padding-right: 20px;
+}
+
+.precio small { 
+    display: block; 
+    font-size: 0.75rem; 
+    color: #888888; 
+}
+
+.btn-carrito {
+    background: var(--color-primary); 
+    color: var(--color-white);
+    border: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+    justify-self: end; 
+    text-decoration: none;
+}
+
+.btn-carrito:hover { 
+    background: var(--color-primary-hover); 
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* --- 2.3 Filtros y Ordenamiento --- */
+.filtros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-filtro {
+    padding: 10px 20px;
+    border: 1px solid #d9e2f0;
+    background: #f4f7fb;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #42648b;
+    transition: 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-filtro.activo {
+    background: linear-gradient(135deg, var(--color-primary-hover), var(--color-primary));
+    color: var(--color-white);
+    border-color: var(--color-primary-hover);
+    box-shadow: 0 6px 14px rgba(43, 95, 174, 0.25);
+}
+
+.btn-filtro:hover {
+    background: #e6eef9;
+    transform: translateY(-1px);
+}
+
+.filtro-orden {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #d9e2f0;
+    border-radius: 999px;
+    background: var(--color-white);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.filtro-orden span {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #42648b;
+}
+
+.filtro-orden select {
+    border: none;
+    background: transparent;
+    color: var(--color-primary-hover);
+    font-weight: 700;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+/* --- 2.4 Precios Especiales y Badges de Oferta --- */
+.precio-original-tachado {
+    text-decoration: line-through;
+    color: #888888;
+    font-size: 0.85rem;
+    margin-right: 6px;
+    display: inline-block;
+}
+
+.precio-oferta-destacado {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.badge-oferta {
+    background: #28a745;
+    color: var(--color-white);
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.badge-producto-destacado {
+    display: inline-block;
+    margin: 6px 4px 0;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #ffd166;
+    color: #5a3d00;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+/* --- 2.5 Responsive Peticiones de Dominios --- */
+@media (max-width: 768px) {
+    .info-dominios {
+        padding: 20px 15px;
+    }
+
+    .explicacion-caja {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .explicacion-caja h2 {
+        font-size: 1.5rem;
+    }
+
+    .explicacion-caja p {
+        font-size: 1rem;
+    }
+
+    .btn-filtro {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .filtro-orden {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .fila-dominio {
+        grid-template-columns: 1fr; 
+        gap: 12px; 
+        text-align: center;
+        padding: 20px;
+    }
+
+    .precio { 
+        text-align: center; 
+        padding-right: 0; 
+        font-size: 1.3rem; 
+    }
+
+    .precio small {
+        display: inline; 
+        margin-left: 5px;
+    }
+
+    .btn-carrito { 
+        justify-self: center; 
+        width: 100%; 
+        padding: 12px;
+    }
+
+    .nombre span {
+        display: block; 
+        margin: 5px auto 0;
+        width: fit-content;
+    }
+
+    .grid-tarjeta { 
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* ==========================================================================
+   FIN - VISTA PÁGINA DE DOMINIOS
+   ========================================================================== */
+
+   
+
+/* ==========================================================================
+   3. VISTA - PÁGINA DE HOSTING
+   ========================================================================== */
+
+/* --- 3.1 Tarjeta Informativa de Hosting --- */
+
+.info-hosting {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.explicacion-caja-hosting {
+    background-color: #fff8eb;
+    padding: 30px;
+    border-left: 6px solid var(--color-primary);
+    border-radius: 10px;
+    max-width: 750px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explicacion-caja-hosting:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+    cursor: default;
+}
+
+.explicacion-caja-hosting h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-text-dark);
+    font-size: 1.8rem;
+}
+
+.explicacion-caja-hosting p {
+    margin: 0;
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* --- 3.2 Grilla y Tarjetas de Planes --- */
+
+.hosting-container {
+    padding: 40px 20px;
+    font-family: sans-serif;
+}
+
+.hosting-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.hosting-card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 350px;
+    padding: 25px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.hosting-card:hover {
+    transform: scale(1.03);
+}
+
+.hosting-card h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.hosting-card .price {
+    margin: 15px 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.features {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+.features li {
+    margin: 8px 0;
+    padding: 0;
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.hosting-card .features li {
+    margin-bottom: 8px;
+}
+
+/* --- 3.3 Botones de Compra --- */
+
+.btn-buy {
+    margin-top: auto;
+    padding: 12px;
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+
+.btn-buy:hover {
+    background-color: #f1f1f1;
+}
+
+.sin-planes-mensaje {
+    color: var(--color-white);
+    text-align: center;
+}
+
+/* --- 3.4 Precios y Badges de Oferta --- */
+
+.price-container {
+    margin: 10px 0;
+}
+
+.precio-original-card {
+    margin-right: 6px;
+    color: #ffd1d1;
+    font-size: 0.95rem;
+    text-decoration: line-through;
+}
+
+.precio-oferta-card {
+    padding: 2px 8px;
+    background-color: var(--color-white);
+    color: #28a745;
+    border-radius: 4px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.precio-normal-card {
+    color: var(--color-white);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.badge-oferta-card {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    background-color: #ff3838;
+    color: var(--color-white);
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.hosting-card .badge-producto-destacado,
+.plan .badge-producto-destacado {
+    margin-bottom: 4px;
+}
+
+.plan .badge-producto-destacado {
+    display: block;
+    width: fit-content;
+    margin: 8px auto 4px;
+}
+
+/* ==========================================================================
+   FIN - VISTA PÁGINA DE HOSTING
+   ========================================================================== */
+
+
+   
+/* ==========================================================================
+   4. VISTA - PÁGINA DE VPS
+   ========================================================================== */
+
+/* --- 4.1 Sección Informativa de VPS --- */
+
+.vps-info {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.vps-description {
+    background-color: #fff8eb;
+    padding: 30px;
+    border-left: 6px solid #3E7AD9;
+    border-radius: 10px;
+    max-width: 750px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vps-description:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+    cursor: default;
+}
+
+.vps-description h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.vps-description p {
+    margin: 0;
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* --- 4.2 Grilla y Tarjetas de Planes VPS --- */
+
+.servicios-vps {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.plan {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    padding: 25px;
+    background-color: #2D61B5;
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.plan:hover {
+    transform: scale(1.03);
+}
+
+.plan p {
+    margin: 15px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.plan ul {
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+.plan ul li {
+    position: relative;
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.plan ul li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #2ecc71;
+}
+
+.plan button {
+    margin-top: auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #3E7AD9;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.plan button:hover {
+    background-color: #f1f1f1;
+}
+
+.plan .btn-buy {
+    display: inline-block;
+    margin-top: auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #3E7AD9;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.plan .btn-buy:hover {
+    background-color: #f1f1f1;
+}
+
+/* --- 4.3 Plan Destacado --- */
+
+.plan-destacado {
+    background-color: #3E7AD9;
+    transform: scale(1.07);
+}
+
+.plan-destacado:hover {
+    transform: scale(1.1);
+}
+
+/* --- 4.4 Responsive VPS --- */
+
+/* Tablets y pantallas medianas */
+
+@media (max-width: 1024px) {
+
+    .servicios-vps {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .plan-destacado {
+        transform: scale(1.03);
+    }
+
+    .plan-destacado:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* Celulares */
+
+@media (max-width: 768px) {
+
+    .servicios-vps {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .vps-info {
+        padding: 20px;
+    }
+
+    .vps-description {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .vps-description h2 {
+        font-size: 1.5rem;
+    }
+
+    .plan {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .plan-destacado {
+        margin: 10px 0;
+        transform: scale(1);
+    }
+
+    .plan-destacado:hover {
+        transform: scale(1.02);
+    }
+}
+
+/* ==========================================================================
+   FIN - VISTA PÁGINA DE VPS
+   ========================================================================== */
+
+
+/* ==========================================================================
+   RESPONSIVE - VISTA CARRITO Y PAGO
+   ========================================================================== */
+
+/* --- Métodos de Pago --- */
+
+.metodos-pago {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 16px;
+}
+
+.metodo-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    margin: 0;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid #e9f6ff;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.12s, transform 0.08s;
+}
+
+.metodo-option:hover,
+.metodo-option:focus-within {
+    box-shadow: 0 8px 20px rgba(22, 48, 107, 0.06);
+    transform: translateY(-2px);
+}
+
+.metodo-option input {
+    width: 18px;
+    height: 18px;
+    margin: 0 8px 0 0;
+    flex: 0 0 auto;
+}
+
+.metodo-option img,
+.metodo-logo {
+    display: block;
+    width: 56px;
+    height: 32px;
+    max-width: 56px;
+    max-height: 32px;
+    flex: 0 0 56px;
+    object-fit: contain;
+}
+
+.metodo-option span {
+    flex: 1 1 auto;
+    margin-left: 8px;
+    overflow: hidden;
+    color: #16306b;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* --- Datos de Pago --- */
+
+.datos-pago {
+    margin-top: 12px;
+    padding: 14px;
+    background: #fbfdff;
+    border: 1px solid rgba(20, 40, 80, 0.04);
+    border-radius: 8px;
+}
+
+.datos-pago .label-pago {
+    display: block;
+    margin-top: 8px;
+    color: #16306b;
+    font-weight: 700;
+}
+
+.datos-pago .input-pago {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border: 1px solid #e6eef9;
+    border-radius: 8px;
+}
+
+/* --- Campos de Tarjeta --- */
+
+.grid-tarjeta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.campo-tarjeta {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Ajustes del Carrito --- */
+
+.carrito-card .metodos-pago {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    max-width: 760px;
+}
+
+.carrito-card .metodo-option {
+    min-height: 68px;
+    position: relative;
+    overflow: hidden;
+}
+
+.carrito-card .metodo-option span {
+    flex: 1 1 auto;
+    margin-left: 8px;
+}
+
+.carrito-card .metodo-option img,
+.carrito-card .metodo-logo {
+    width: 56px;
+    height: 32px;
+    max-width: 56px;
+    max-height: 32px;
+}
+
+/* --- Responsive Carrito y Pago --- */
+
+@media (max-width: 600px) {
+
+    .grid-tarjeta {
+        grid-template-columns: 1fr;
+    }
+
+    .metodos-pago {
+        grid-template-columns: 1fr;
+    }
+
+    .metodo-option {
+        width: 100%;
+    }
+
+    .carrito-card .metodo-option {
+        padding-right: 16px;
+    }
+
+    .carrito-card .metodo-option::after {
+        right: 8px;
+        width: 40px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .carrito-card .metodo-option {
+        min-height: 56px;
+        padding: 10px;
+    }
+
+    .carrito-card .metodo-option img {
+        max-width: 64px;
+        max-height: 28px;
+    }
+}
+
+/* ==========================================================================
+   FIN - RESPONSIVE VISTA CARRITO Y PAGO
+   ========================================================================== */
+
+/* ==========================================================================
+   5. VISTAS - LEGALES Y SOPORTE (TÉRMINOS, PRIVACIDAD, SOPORTE)
+   ========================================================================== */
+
+/* --- 5.1 Contenedores Principales --- */
+.contenedor-legal, 
+.contenedor-soporte {
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    background-color: #fafafa;
+    min-height: 50vh;
+}
+
+/* --- 5.2 Caja de Información (Términos y Privacidad) --- */
+.caja-info {
+    background-color: var(--color-white); 
+    padding: 40px;
+    border-left: 6px solid var(--color-primary); 
+    border-radius: 10px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    line-height: 1.8;
+    text-align: left;
+}
+
+.caja-info h2 {
+    color: var(--color-text-dark);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--color-primary);
+    display: inline-block;
+    padding-bottom: 5px;
+    font-size: 1.5rem;
+}
+
+.caja-info p { 
+    margin-bottom: 20px; 
+    color: #555555; 
+    font-size: 1.05rem; 
+}
+
+/* --- 5.3 Listas con Viñetas Personalizadas --- */
+.caja-info ul { 
+    list-style: none; 
+    margin: 20px 0; 
+}
+
+.caja-info li { 
+    margin-bottom: 15px; 
+    padding-left: 25px; 
+    position: relative; 
+    color: #444444; 
+}
+
+.caja-info li::before { 
+    content: "✔"; 
+    color: var(--color-primary); 
+    position: absolute; 
+    left: 0; 
+    font-weight: bold; 
+}
+
+/* --- 5.4 Responsive Legales y Soporte --- */
+@media (max-width: 768px) {
+    .caja-info { 
+        padding: 25px; 
+    }
+    
+    .contenedor-legal, 
+    .contenedor-soporte { 
+        padding: 30px 15px; 
+    }
+}
+
+/* ==========================================================================
+   FIN - VISTAS LEGALES Y SOPORTE
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   6. VISTA - INICIO DE SESIÓN (LOGIN Y MAGIC LINK)
+   ========================================================================== */
+
+/* --- 6.1 Estructura Principal del Formulario --- */
+.inicio-sesion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    background: #f4f6f9;
+    min-height: 80vh;
+}
+
+.inicio-sesion h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: var(--color-text-dark);
+}
+
+.iniciar-sesion-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.iniciar-sesion {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.iniciar-sesion form {
+    display: flex;
+    flex-direction: column;
+}
+
+.iniciar-sesion label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+.iniciar-sesion input {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.iniciar-sesion input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.iniciar-sesion button {
+    margin-top: 25px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.iniciar-sesion button:hover {
+    background: var(--color-primary-hover);
+}
+
+/* --- 6.2 Badge y Sección Magic Link --- */
+.magic-link-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.magic-link-badge a {
+    font-size: 0.8em;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--color-primary);
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--color-white);
+    white-space: nowrap;
+}
+
+.magic-link-section {
+    margin: 40px 0 0;
+    border-top: 1px solid #ccc;
+    padding-top: 30px;
+    scroll-margin-top: 20px;
+}
+
+.magic-link-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.magic-link-btn {
+    padding: 10px 15px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.magic-link-btn:hover {
+    background: var(--color-primary-hover);
+}
+
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    width: 100%;
+}
+
+/* --- 6.3 Responsive Login --- */
+@media (max-width: 480px) {
+    .inicio-sesion {
+        padding: 40px 15px;
+    }
+
+    .iniciar-sesion {
+        padding: 25px 20px;
+    }
+
+    .inicio-sesion h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .magic-link-input {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 350px) {
+    .g-recaptcha iframe, 
+    .g-recaptcha > div {
+        transform: scale(0.82);
+        transform-origin: center center;
+    }
+}
+
+/* ==========================================================================
+   7. VISTA - REGISTRO Y COMPONENTES DE CONTRASEÑA
+   ========================================================================== */
+
+/* --- 7.1 Contenedor y Toggle de Mostrar/Ocultar Contraseña --- */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Espacio suficiente para no pisar el icono */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10; /* Mantiene el icono sobre el input para capturar el clic */
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   FIN - VISTA REGISTRO Y COMPONENTES
+   ========================================================================== */
+
+/* ==========================================================================
+   8. VISTA - ÁREA DE CLIENTES Y PERFIL (RECONSTRUIDA Y RESPONSIVE)
+   ========================================================================== */
+
+/* --- 8.1 Corrección Global de Caja --- */
+.accesos-rapidos, 
+.area-clientes, 
+.area-facturas-etc, 
+.area-cambio-contraseña,
+.form-cambio-contraseña,
+.area-perfil,
+.card-resena,
+table {
+    box-sizing: border-box;
+}
+
+/* --- 8.2 Accesos Rápidos --- */
+.accesos-rapidos {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 30px 20px;
+    flex-wrap: wrap;
+}
+
+.boton-accion, 
+.btn-acceso {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.boton-accion {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: 1px solid var(--color-primary);
+}
+
+.btn-acceso {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.boton-accion:hover, 
+.btn-acceso:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 8.3 Contenedores Principales (Secciones) --- */
+.area-clientes, 
+.area-facturas-etc, 
+.area-cambio-contraseña {
+    max-width: 1000px;
+    width: 90%;
+    margin: 20px auto 40px;
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.area-clientes h1, 
+.area-facturas-etc h1, 
+.area-cambio-contraseña h1 {
+    margin-bottom: 20px;
+    color: #333333;
+    font-size: 1.8rem;
+}
+
+.area-clientes p {
+    margin-bottom: 20px;
+    color: #555555;
+    line-height: 1.6;
+}
+
+/* --- 8.4 Desplegables (Details & Summary) --- */
+details {
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    text-align: left;
+}
+
+summary {
+    padding: 12px 15px;
+    font-weight: bold;
+    list-style: none;
+    cursor: pointer;
+    outline: none;
+}
+
+summary:hover {
+    background: #fff3e0;
+}
+
+.contenido-dominio, 
+.contenido-hosting, 
+.contenido-vps, 
+.contenido-soporte, 
+.contenido-seguridad {
+    padding: 20px;
+    background: var(--color-white);
+    border-top: 1px solid #eeeeee;
+}
+
+/* --- 8.5 Tabla de Facturas --- */
+.tabla-facturas {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow-x: auto; 
+}
+
+table {
+    width: 100%;
+    min-width: 600px; 
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #eeeeee;
+    text-align: center;
+}
+
+.celda-sin-facturas {
+    padding: 15px;
+    color: #6c757d;
+    text-align: center;
+}
+
+/* --- 8.6 Formulario Cambio Contraseña --- */
+.form-cambio-contraseña {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-cambio-contraseña input {
+    margin: 8px 0 15px 0;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* --- 8.7 Contenedor y Formulario de Perfil --- */
+.contenedor-perfil-centrado {
+    display: flex;
+    justify-content: center;
+}
+
+.area-perfil {
+    max-width: 900px;
+    width: 90%;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--color-white);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.area-perfil h1 {
+    margin-bottom: 10px;
+    color: #222222;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.area-perfil p {
+    margin-bottom: 25px;
+    color: #666666;
+    text-align: center;
+}
+
+.form-perfil {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-perfil label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333333;
+    font-weight: 600;
+}
+
+.form-perfil input {
+    width: 250px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.form-perfil input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(62, 122, 217, 0.2);
+    outline: none;
+}
+
+.boton-cambiar {
+    padding: 13px 22px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-cambiar:hover {
+    background: var(--color-primary-hover);
+    box-shadow: 0 8px 18px rgba(62, 122, 217, 0.3);
+    transform: translateY(-2px);
+}
+
+/* --- 8.8 Badges y Acciones de Facturación --- */
+.badge-estado-pagada {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #28a745;
+    color: var(--color-white);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.badge-estado-pendiente {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #ffc107;
+    color: #333333;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.enlace-descarga-pdf {
+    color: #6f42c1;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.formulario-simulacion-pago {
+    display: inline;
+}
+
+.boton-simulacion-pago {
+    padding: 6px 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.boton-simulacion-pago:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* --- 8.9 Formulario de Reseñas --- */
+.card-resena {
+    max-width: 550px;
+    margin: 20px auto;
+    padding: 25px;
+    background: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    margin: 10px 0 20px 0;
+}
+
+.rating-input input {
+    display: none;
+}
+
+.rating-input label {
+    color: #ccc;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.rating-input label:hover,
+.rating-input label:hover ~ label,
+.rating-input input:checked ~ label {
+    color: #ffca28;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.grupo-campo textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: var(--font-main);
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.btn-enviar-resena {
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-enviar-resena:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.encabezado-campo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.contador-caracteres {
+    color: #666666;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* --- 8.10 Responsive Área Clientes --- */
+@media (max-width: 768px) {
+    .area-clientes, 
+    .area-facturas-etc, 
+    .area-cambio-contraseña,
+    .area-perfil,
+    .card-resena {
+        width: calc(100% - 30px); 
+        margin: 15px auto;
+        padding: 20px;
+    }
+
+    .accesos-rapidos {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .boton-accion, 
+    .btn-acceso {
+        width: 100%; 
+    }
+
+    .area-clientes h1,
+    .area-perfil h1 {
+        font-size: 1.5rem;
+    }
+
+    summary {
+        font-size: 0.95rem;
+    }
+
+    .form-perfil input {
+        width: 100%;
+    }
+    
+    .form-perfil {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* ==========================================================================
+   FIN - VISTA CLIENTES
+   ========================================================================== */
+
+/* ========================================================================== 
+   9. VISTA - PANEL DE ADMINISTRACIÓN (LAYOUT Y COMPONENTES)
+   ========================================================================== */
+
+/* --- 9.1 Layout Principal y Menú Lateral (Sidebar) --- */
+
+.admin-panel {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    min-height: 100vh;
+    padding: 25px 15px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+    font-size: 1.4rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar nav a {
+    display: block;
+    margin-bottom: 8px;
+    padding: 12px 15px;
+    color: var(--color-white);
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar nav a:hover {
+    padding-left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav a.active {
+    padding-left: 20px;
+    background: var(--color-white);
+    color: var(--color-primary);
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 9.2 Contenido Principal y Tarjetas Resumen --- */
+
+.main-content {
+    flex: 1;
+    margin-left: 240px;
+    padding: 35px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.main-content h1 {
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.resumen {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.caja {
+    flex: 1;
+    padding: 25px;
+    background: var(--color-white);
+    border-top: 5px solid var(--color-primary);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.caja h3 {
+    margin-bottom: 10px;
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.caja p {
+    color: #4D6082;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* --- 9.3 Toolbar y Tablas de Datos --- */
+
+.toolbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.toolbar input,
+.toolbar select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.toolbar input {
+    flex: 1;
+}
+
+.tabla-datos {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.tabla-datos h3 {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.tabla-datos td,
+.tabla-datos th {
+    text-align: center;
+}
+
+.tabla-datos td:nth-child(5),
+.tabla-datos td:nth-child(6) {
+    text-align: center;
+}
+
+/* --- 9.4 Modificadores de Texto y Estados --- */
+
+.texto-activo,
+.texto-pagado,
+.texto-oferta-activa {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.texto-suspendido {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.texto-facturado {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.texto-pendiente {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.texto-sin-oferta {
+    color: #888888;
+}
+
+.texto-protegido {
+    display: block;
+    color: #888888;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.badge-tiempo {
+    padding: 3px 6px;
+    background-color: #fff3cd;
+    color: #856404;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-inactivo {
+    padding: 3px 6px;
+    background-color: #e2e3e5;
+    color: #383d41;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* --- 9.5 Botones de Acción y Formularios Inline --- */
+
+.formulario-inline {
+    display: inline;
+}
+
+.contenedor-flex-centrado {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-nuevo {
+    padding: 12px 20px;
+    background: #27ae60;
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-nuevo:hover {
+    background: #219150;
+}
+
+.btn-factura {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-generar {
+    background-color: #27ae60;
+    color: var(--color-white);
+}
+
+.btn-generar:hover {
+    background-color: #219150;
+}
+
+.btn-renovar {
+    background-color: #e67e22;
+    color: var(--color-white);
+}
+
+.btn-renovar:hover {
+    background-color: #d35400;
+}
+
+.btn-emitida {
+    background-color: #bdc3c7;
+    color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+.btn-suspender {
+    justify-self: end;
+    padding: 8px 15px;
+    background-color: #dc3545;
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-activar {
+    justify-self: end;
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: var(--color-white);
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-backup {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.cambio-rol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.cambio-rol select {
+    padding: 6px 10px;
+    background-color: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cambio-rol select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.cambio-rol button {
+    padding: 6px 12px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cambio-rol button:hover {
+    background-color: #1d4ed8;
+}
+
+.cambio-rol button:active {
+    transform: scale(0.97);
+}
+
+/* --- 9.6 Componente de Contraseña --- */
+
+.password-group {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center;
+}
+
+.password-group input {
+    padding-right: 30px !important;
+}
+
+.btn-monito {
+    position: absolute !important;
+    right: 8px !important;
+    z-index: 2;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn-monito:focus {
+    outline: none;
+}
+
+/* --- 9.7 Ventana Modal de Suspensión --- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-contenedor {
+    width: 400px;
+    margin: 15% auto;
+    padding: 20px;
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.modal-etiqueta {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal-campo {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.modal-acciones {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.btn-cancelar {
+    margin-right: 5px;
+    padding: 8px 12px;
+}
+
+.btn-confirmar-suspension {
+    padding: 8px 12px;
+    background-color: #dc3545;
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* --- 9.8 Moderación de Opiniones y Calificaciones --- */
+
+.estrellas-rating {
+    color: #ffc107;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.texto-rating {
+    margin-left: 4px;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.boton-eliminar-resena {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.boton-eliminar-resena:hover {
+    background-color: #bd2130;
+}
+
+.mensaje-vacio {
+    padding: 30px;
+    color: #6c757d;
+    text-align: center;
+    font-style: italic;
+}
+
+/* --- 9.9 Gestión de Ofertas y Productos Más/Menos Vendidos --- */
+
+.form-crear-oferta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-oferta, 
+.input-minutos {
+    width: 90px;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.productos-mas-vendidos {
+    margin-bottom: 30px;
+    padding: 24px;
+    background: linear-gradient(135deg, #fffdf4 0%, #ffffff 70%);
+    border: 1px solid #f0df9a;
+    border-left: 5px solid #e0ad18;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.productos-mas-vendidos__encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.productos-mas-vendidos__etiqueta {
+    color: #8a6500;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.productos-mas-vendidos h2 {
+    margin: 4px 0;
+    color: #333333;
+    font-size: 1.35rem;
+}
+
+.productos-mas-vendidos__encabezado p {
+    color: #6c6c6c;
+    font-size: 0.9rem;
+}
+
+.productos-mas-vendidos__icono {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    background: #ffd166;
+    color: #6f5100;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.productos-mas-vendidos__lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+    gap: 10px;
+}
+
+.producto-mas-vendido {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #f0ead2;
+    border-radius: 8px;
+}
+
+.producto-mas-vendido__posicion {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    background: var(--color-primary);
+    color: #ffffff;
+    border-radius: 50%;
+    font-weight: 800;
+}
+
+.producto-mas-vendido__datos,
+.producto-mas-vendido__metricas {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 3px;
+}
+
+.producto-mas-vendido__datos {
+    flex: 1;
+}
+
+.producto-mas-vendido__datos strong,
+.producto-mas-vendido__metricas strong {
+    overflow: hidden;
+    color: #333333;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.producto-mas-vendido__datos span,
+.producto-mas-vendido__metricas span {
+    color: #777777;
+    font-size: 0.78rem;
+}
+
+.producto-mas-vendido__metricas {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.producto-mas-vendido__metricas strong {
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+.productos-mas-vendidos__vacio {
+    padding: 12px;
+    background: #ffffff;
+    color: #777777;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Modificador para productos menos vendidos */
+.productos-menos-vendidos {
+    background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 70%);
+    border-color: #cbdcf4;
+    border-left-color: var(--color-primary);
+}
+
+.productos-menos-vendidos .productos-mas-vendidos__etiqueta,
+.productos-menos-vendidos .productos-mas-vendidos__icono,
+.productos-menos-vendidos .producto-mas-vendido__metricas strong {
+    color: #2B5FAE;
+}
+
+.productos-menos-vendidos .productos-mas-vendidos__icono {
+    background: #dceaff;
+}
+
+.productos-menos-vendidos .producto-mas-vendido {
+    border-color: #dce6f1;
+}
+
+/* --- 9.10 Footer Admin --- */
+
+.footer-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin-left: 240px;
+    padding: 0 30px;
+    background: #4D6082;
+    color: #bdc3c7;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+}
+
+/* --- 9.11 Responsive Admin --- */
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    background: #333333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #ffffff;
+    transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.4s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .admin-panel {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding-top: 60px;
+    }
+
+    .resumen {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .header-clientes {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toolbar input,
+    .toolbar select {
+        width: 100%;
+    }
+
+    .tabla-datos {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    .footer-admin {
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+        margin-left: 0;
+        padding: 20px 10px;
+        text-align: center;
+    }
+
+    .footer-derecha {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   FIN - PANEL DE ADMINISTRACIÓN
+   ========================================================================== */
+
+/* ==========================================================================
+   10. VISTA - CARRITO Y PAGO
+   ========================================================================== */
+
+/* --- 10.1 Contenedor y Tarjeta del Carrito --- */
+
+.carrito-container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+}
+
+.carrito-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    background-color: #fff;
+    border-top: 5px solid #3E7AD9;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.carrito-card h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* --- 10.2 Formulario y Datos de Pago --- */
+
+.form-pago {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.label-pago {
+    color: #2B5FAE;
+    font-weight: 700;
+}
+
+.input-pago {
+    padding: 10px 12px;
+    border: 1px solid #cdd7e2;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.paso-indicador {
+    margin-top: 8px;
+    color: #3E7AD9;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.resumen-pago {
+    margin-top: 8px;
+    padding: 12px;
+    background-color: #f4f8ff;
+    border: 1px solid #dce6f1;
+    border-radius: 8px;
+}
+
+.datos-tarjeta {
+    margin-top: 8px;
+    padding: 12px;
+    background-color: #f9fbff;
+    border: 1px solid #dce6f1;
+    border-radius: 10px;
+}
+
+/* --- 10.3 Métodos de Pago --- */
+
+.metodos-pago {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.metodo-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 8px;
+    background-color: #f8fbff;
+    border: 1px solid #dce6f1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+}
+
+.carrito-card .metodo-option {
+    position: relative;
+    padding-right: 52px; /* Reducido de 94px para dar espacio al texto */
+    overflow: hidden;
+}
+
+.carrito-card .metodo-option::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 40px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.carrito-card .metodo-paypal::after {
+    background-image: url("../img/paypal.png");
+}
+
+.carrito-card .metodo-nequi::after {
+    background-image: url("../img/nequi.png");
+}
+
+.carrito-card .metodo-daviplata::after {
+    background-image: url("../img/daviplata.png");
+}
+
+.carrito-card .metodo-card::after {
+    background-image: url("../img/visa-mastercard.png");
+}
+
+/* Oculta imágenes originales para utilizar los pseudo-elementos */
+
+.carrito-card .metodo-option img,
+.carrito-card .metodo-logo {
+    display: none !important;
+}
+
+/* --- 10.4 Campos de Tarjeta --- */
+
+.grid-tarjeta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.campo-tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* --- 10.5 Enlaces de Navegación --- */
+
+.link-volver-pago {
+    color: #2B5FAE;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-seguir-comprando {
+    color: #2B5FAE;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+.btn-pago-link {
+    display: inline-block;
+    width: auto;
+    margin-top: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* --- 10.6 Detalle del Carrito --- */
+
+.carrito-detalle {
+    margin: 20px 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.item-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 0;
+    text-align: left;
+}
+
+.item-carrito__info p {
+    margin: 0;
+}
+
+.item-carrito__subtotal {
+    color: #3E7AD9;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.cantidad-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cantidad-label {
+    color: #444;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.cantidad-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #cfd8e3;
+    border-radius: 6px;
+}
+
+.resumen-carrito {
+    margin-top: 15px;
+    padding: 12px 0;
+    border-top: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.total-final {
+    margin-top: 6px;
+    color: #2B5FAE;
+    font-size: 1.2rem;
+}
+
+/* --- 10.7 Botones del Carrito --- */
+
+.btn-cantidad {
+    padding: 8px 12px;
+    background-color: #3E7AD9;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-eliminar {
+    align-self: flex-start;
+    color: #e74c3c;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-comprar {
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px 30px;
+    background-color: #3E7AD9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-comprar:hover {
+    background-color: #2B5FAE;
+}
+
+.btn-comprar-hosting {
+    padding: 12px;
+    background-color: #3E7AD9;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-comprar-hosting:hover {
+    background-color: #2B5FAE;
+}
+
+/* --- 10.8 Enlace del Carrito en la Navbar --- */
+
+.cart-link {
+    padding: 5px 10px !important;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   FIN - VISTA CARRITO Y PAGO
+   ========================================================================== */
+
+/* ==========================================================================
+   11. COMPONENTE - BANNER DE COOKIES
+   ========================================================================== */
+
+/* --- 11.1 Contenedor Principal y Animación --- */
+
+.cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    padding: 20px;
+    background-color: #1a202c;
+    color: #ffffff;
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    z-index: 10000;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cookie-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* --- 11.2 Textos y Enlaces --- */
+
+.cookie-banner p {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.cookie-banner a {
+    color: #63b3ed;
+    text-decoration: underline;
+}
+
+.cookie-banner a:hover {
+    color: #90cdf4;
+}
+
+/* --- 11.3 Botones de Acción --- */
+
+.cookie-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-cookie {
+    flex: 1;
+    padding: 9px 15px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-cookie-aceptar {
+    background-color: #2b6cb0;
+    color: #ffffff;
+}
+
+.btn-cookie-aceptar:hover {
+    background-color: #2c5282;
+}
+
+.btn-cookie-rechazar {
+    background-color: transparent;
+    color: #cbd5e0;
+    border: 1px solid #4a5568;
+}
+
+.btn-cookie-rechazar:hover {
+    background-color: #2d3748;
+    color: #ffffff;
+}
+
+/* --- 11.4 Adaptabilidad Responsive --- */
+
+@media (max-width: 768px) {
+    .cookie-contenido {
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .cookie-botones {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .btn-cookie {
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .cookie-banner {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+
+    .cookie-botones {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   FIN - COMPONENTE BANNER DE COOKIES
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   12. COMPONENTE - DROPDOWN DE USUARIO
+   ========================================================================== */
+
+/* --- 12.1 Contenedor y Botón Principal --- */
+.usuario-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.usuario-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white, #ffffff);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.usuario-btn:hover,
+.usuario-btn:focus {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* --- 12.2 Menú Desplegable y Enlaces --- */
+.usuario-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 160px;
+    padding: 6px;
+    background: #0b1528;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+}
+
+.usuario-menu.show {
+    display: block;
+}
+
+.usuario-menu a {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    color: var(--color-white, #ffffff);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+.usuario-menu a:hover {
+    background-color: #2b5fae;
+    color: #ffffff;
+}
+
+/* --- 12.3 Badge de Rol --- */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    background: rgba(255, 255, 255, 0.22);
+    color: var(--color-white, #ffffff);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* --- 12.4 Adaptabilidad Responsive --- */
+@media (max-width: 768px) {
+    .usuario-dropdown {
+        justify-content: center;
+        width: 100%;
+        margin-top: 8px;
+        margin-left: 0;
+    }
+
+    .usuario-btn {
+        width: auto;
+        text-align: center;
+    }
+
+    .usuario-menu {
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+/* ==========================================================================
+   FIN - COMPONENTE DROPDOWN DE USUARIO
+   ========================================================================== */
+
+
+/* ==========================================================================
+   13. COMPONENTE - NOTIFICACIONES Y AVISOS (TOASTS)
+   ========================================================================== */
+
+/* --- 13.1 Contenedor Principal y Elemento Toast --- */
+
+.toast-container {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    max-width: calc(100% - 40px);
+    padding: 0 10px;
+    z-index: 999;
+}
+
+.toast {
+    width: 100%;
+    min-width: 260px;
+    max-width: 420px;
+    padding: 14px 18px;
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.toast-hide {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.mensaje-flash {
+    font-weight: 600;
+}
+
+/* --- 13.2 Tipos y Estados de Alerta --- */
+
+.alerta-success {
+    background: #eafaf1;
+    color: #166534;
+    border-color: #7dd3a8;
+}
+
+.alerta-danger {
+    background: #fef2f2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+.alerta-warning {
+    background: #fff7ed;
+    color: #9a5a00;
+    border-color: #fdba74;
+}
+
+.alerta-info {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #93c5fd;
+}
+
+/* ==========================================================================
+   FIN - COMPONENTE NOTIFICACIONES Y AVISOS
+   ========================================================================== */
+
+   
+
+/* ==========================================================================
+   14. VISTA - RECUPERACIÓN Y RESTABLECIMIENTO DE CONTRASEÑA
+   ========================================================================== */
+
+/* --- 14.1 Texto Informativo --- */
+.descripcion-recuperar {
+    margin-bottom: 20px;
+    color: #555555;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* --- 14.2 Botones de Acción --- */
+.btn-recuperar {
+    margin-top: 15px;
+}
+
+/* --- 14.3 Navegación y Retorno --- */
+.retorno-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   FIN - VISTA RECUPERACIÓN Y RESTABLECIMIENTO
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   15. COMPONENTE - BOTÓN FLOTANTE TALKBACK (ACCESIBILIDAD)
+   ========================================================================== */
+
+/* --- 15.1 Botón Base y Posicionamiento --- */
+#talkback-toggle.talkback-toggle {
+    position: fixed !important;
+    left: 16px !important;
+    bottom: 16px !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: 99999 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 16px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #0d6efd, #2b5fae) !important;
+    color: var(--color-white, #ffffff) !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25) !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    text-transform: none !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    min-width: unset !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+/* --- 15.2 Estados (Hover, Focus, Activo) --- */
+#talkback-toggle.talkback-toggle:hover, 
+#talkback-toggle.talkback-toggle:focus-visible {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+}
+
+#talkback-toggle.talkback-toggle.active {
+    background: linear-gradient(135deg, #198754, #0f7f3b) !important;
+}
+
+/* --- 15.3 Elementos Internos --- */
+#talkback-toggle .talkback-icon {
+    font-size: 1.1rem !important;
+    line-height: 1 !important;
+}
+
+#talkback-toggle .talkback-text {
+    letter-spacing: 0.02em !important;
+    font-size: 0.95rem !important;
+    color: var(--color-white, #ffffff) !important;
+}
+
+/* --- 15.4 Responsive (Móviles) --- */
+@media (max-width: 768px) {
+    #talkback-toggle.talkback-toggle {
+        left: 12px !important;
+        right: auto !important;
+        bottom: 12px !important;
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+        max-width: 150px !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* ==========================================================================
+   FIN - BOTÓN FLOTANTE TALKBACK
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   16. VISTA - CUENTA SUSPENDIDA (BANEADO)
+   ========================================================================== */
+
+/* --- 16.1 Contenedor Principal --- */
+.container-baneado {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 40px;
+    background: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- 16.2 Iconografía y Textos --- */
+.icono-bloqueo {
+    margin-bottom: 20px;
+    color: #dc3545;
+    font-size: 3.75rem;
+}
+
+.texto-suspendido-detalle {
+    margin-top: 15px;
+    color: #555555;
+    line-height: 1.6;
+}
+
+.texto-suspendido-info {
+    margin-top: 10px;
+    color: #777777;
+}
+
+/* --- 16.3 Botón de Retorno --- */
+.btn-regresar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-regresar:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* ==========================================================================
+   FIN - VISTA CUENTA SUSPENDIDA
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   17. VISTA - AUTENTICACIÓN DE DOS FACTORES (2FA)
+   ========================================================================== */
+
+/* --- 17.1 Textos Informativos --- */
+.instrucciones-2fa {
+    margin-bottom: 20px;
+    color: #4a4a4a;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* --- 17.2 Campo de Entrada del Código --- */
+.input-2fa {
+    font-size: 1.6rem !important;
+    font-weight: bold;
+    letter-spacing: 8px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   FIN - VISTA AUTENTICACIÓN 2FA
+   ========================================================================== */
+
+   
+
+/* ==========================================================================
+   18. VISTA - ADMINISTRADOR SUSPENDIDO
+   ========================================================================== */
+
+/* --- 18.1 Layout y Contenedores --- */
+.body-suspendido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f6f9;
+}
+
+.contenedor-suspendido {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* --- 18.2 Tarjeta de Suspensión e Información --- */
+.tarjeta-suspendido {
+    padding: 30px;
+    background-color: var(--color-white, #ffffff);
+    border-top: 5px solid #d9534f;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.icono-bloqueo {
+    margin-bottom: 15px;
+    font-size: 3rem;
+}
+
+.caja-info-suspension {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff8f8;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    color: #721c24;
+    text-align: left;
+}
+
+.caja-info-suspension ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+/* --- 18.3 Botón de Acción --- */
+.btn-cerrar-sesion-admin {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #333333;
+    color: var(--color-white, #ffffff);
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-cerrar-sesion-admin:hover {
+    background-color: #555555;
+}
+
+/* ==========================================================================
+   FIN - VISTA ADMINISTRADOR SUSPENDIDO
+   ========================================================================== */

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Opiniones | DominiosFull</title>
+    
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Panel administrativo para moderar opiniones y reseñas de clientes en DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/admin-opiniones">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/admin-opiniones">
+    <meta property="og:title" content="DominiosFull - Admin - Gestión de Opiniones">
+    <meta property="og:description" content="Panel administrativo para moderar opiniones y reseñas de clientes en DominiosFull.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Gestión de Opiniones">
+    <meta name="twitter:description" content="Panel administrativo para moderar opiniones y reseñas de clientes en DominiosFull.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Botón para alternar el menú desplegable lateral -->
+    <button class="menu-toggle" id="btnMenu" aria-label="Abrir o cerrar menú lateral">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="admin-panel">
+        <!-- Barra lateral de navegación principal -->
+        <aside class="sidebar" id="sidebar">
+            <h2 aria-label="Panel Administrativo DominiosFull">Panel Administrativo DominiosFull</h2>
+            <nav role="navigation" aria-label="Navegación del panel administrativo">
+                <a href="/admin-inicio" aria-label="Ir a Inicio">Inicio</a>
+                <a href="/admin-clientes.servicios" aria-label="Ir a Clientes y Servicios">Clientes y Servicios</a>
+                <a href="/admin-productos" aria-label="Ir a Gestión de productos y ofertas">Gestión de productos</a>
+                <a href="/admin-opiniones" class="active" aria-label="Sección actual: Gestión de opiniones">Gestión de Opiniones</a>
+                <a href="/" aria-label="Volver a la Página Web principal">Volver a la Página Web</a>
+                <a href="{{ url_for('logout') }}" aria-label="Cerrar Sesión administrativa">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Área de contenido principal -->
+        <main class="main-content" role="main">
+            <header>
+                <h1 aria-label="Gestión y Moderación de Reseñas">Gestión y Moderación de Reseñas</h1>
+            </header>
+
+            <!-- Contenedor dinámico de alertas y mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="toast-container">
+                        {% for category, message in messages %}
+                            <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Tabla de opiniones de clientes -->
+            <section class="tabla-datos">
+                <h2 aria-label="Sección Comentarios y Calificaciones">Comentarios de Clientes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Cliente">Cliente</th>
+                            <th aria-label="Columna Calificación">Calificación</th>
+                            <th aria-label="Columna Comentario">Comentario</th>
+                            <th aria-label="Columna Fecha">Fecha</th>
+                            <th aria-label="Columna Acción">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if resenas %}
+                            {% for r in resenas %}
+                                <tr>
+                                    <td>{{ r[0] }}</td>
+                                    <td>
+                                        <strong>{{ r[4] }}</strong><br>
+                                        <small>{{ r[5] }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="estrellas-rating" aria-label="{{ r[2] }} de 5 estrellas">
+                                            {% for _ in range(r[2]) %}★{% endfor %}
+                                        </span>
+                                        <span class="texto-rating">({{ r[2] }}/5)</span>
+                                    </td>
+                                    <td>"{{ r[1] }}"</td>
+                                    <td>{{ r[3].strftime('%d/%m/%Y %H:%M') if r[3] else '' }}</td>
+                                    <td>
+                                        <form action="{{ url_for('eliminar_resena', id_resena=r[0]) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta reseña?');">
+                                            <button type="submit" class="boton-eliminar-resena" aria-label="Eliminar reseña de {{ r[4] }}">🗑️ Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="mensaje-vacio" aria-label="Sin opiniones registradas">No hay opiniones registradas para moderar</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Pie de página informativo -->
+    <footer class="footer-admin">
+        <div class="footer-izquierda">
+            <p aria-label="Copyright 2026 SoftNova, Panel de Administración">© 2026 <strong>SoftNova</strong> | Panel de Administración</p>
+        </div>
+        <div class="footer-derecha">
+            <span class="version" aria-label="Versión del sistema 1.0">Versión 1.0</span>
+            <span class="separador">|</span>
+            <span class="estado" aria-label="Estado del Sistema: Online"><i class="punto-verde"></i> Sistema Online</span>
+        </div>
+    </footer>
+
+    <!-- Carga diferida de scripts para mejorar el rendimiento -->
+    <script src="../static/js/admin.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título y Meta Descripción SEO -->
+    <title>Verificación en Dos Pasos | DominiosFull</title>
+    <meta name="description" content="Verificación de seguridad en dos pasos para el acceso seguro a tu cuenta en DominiosFull.">
+    
+    <!-- Bloqueo de indexación por seguridad -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/verificar-2fa">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/verificar-2fa">
+    <meta property="og:title" content="Verificación de Seguridad en Dos Pasos | DominiosFull">
+    <meta property="og:description" content="Confirma tu identidad para acceder a tu cuenta en DominiosFull.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Verificación de Seguridad en Dos Pasos | DominiosFull">
+    <meta name="twitter:description" content="Confirma tu identidad para acceder a tu cuenta en DominiosFull.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="toast-container">
+                {% for category, message in messages %}
+                <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header class="navbar" role="banner">        
+        <a href="/" aria-label="Ir a la página de inicio de DominiosFull">
+            <img src="../static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
+        </a>
+        <nav role="navigation" aria-label="Menú principal de navegación">
+            <a href="/" aria-label="Ir a Inicio">Inicio</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/dominios" aria-label="Ir a servicios de Dominios">Dominios</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/hosting" aria-label="Ir a servicios de Hosting">Hosting</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/vps" aria-label="Ir a servidores VPS">VPS</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/soporte" aria-label="Ir a Contacto y Soporte">Contacto</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="/carrito" class="cart-link" aria-label="Ver el carrito de compras">🛒 Carrito</a>
+            <span class="separadorindex" aria-hidden="true">|</span>
+            <a href="{{ url_for('login.login') }}" class="active" aria-label="Sección actual: Iniciar Sesión">Login</a>
+        </nav>                                                               
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="inicio-sesion" aria-labelledby="titulo-2fa">
+            <h2 id="titulo-2fa">Verificación de Seguridad en Dos Pasos</h2>
+            <div class="iniciar-sesion iniciar-sesion-wrapper">
+                
+                <p id="instrucciones-2fa" class="instrucciones-2fa">
+                    Hemos enviado un código de 6 dígitos numéricos a tu correo electrónico. Ingrésalo para confirmar tu identidad.
+                </p>
+                
+                <form action="{{ url_for('login.verificar_2fa') }}" method="post" aria-label="Formulario de verificación de código">
+                    <label for="codigo" id="label-codigo">Código de Verificación de 6 dígitos</label>
+                    <input 
+                        type="text" 
+                        id="codigo" 
+                        name="codigo" 
+                        placeholder="000000" 
+                        maxlength="6" 
+                        pattern="[0-9]{6}" 
+                        inputmode="numeric" 
+                        autocomplete="one-time-code" 
+                        required 
+                        aria-labelledby="label-codigo"
+                        aria-describedby="instrucciones-2fa"
+                        aria-required="true"
+                        class="input-2fa"
+                    >
+                    
+                    <button type="submit" aria-label="Verificar código de seguridad e iniciar sesión">
+                        Verificar y Entrar
+                    </button>
+
+                    <p>
+                        <a href="{{ url_for('login.login') }}" aria-label="Cancelar y volver a la página de inicio de sesión">
+                            ← Volver al login
+                        </a>
+                    </p>
+                </form>
+                
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts externos -->
+    <script src="../static/js/talkback.js" defer></script>
+    <script src="../static/js/codigo_2fa.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+
+</html>

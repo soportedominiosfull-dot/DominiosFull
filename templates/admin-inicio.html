@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo | DominiosFull</title>
+    
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Panel de control principal e inicio administrativo de DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/admin-inicio">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/admin-inicio">
+    <meta property="og:title" content="DominiosFull - Admin - Inicio">
+    <meta property="og:description" content="Panel principal de administración de métricas, perfil y actividades de DominiosFull.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Inicio">
+    <meta name="twitter:description" content="Panel principal de administración de métricas, perfil y actividades de DominiosFull.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Botón para alternar el menú desplegable lateral -->
+    <button class="menu-toggle" id="btnMenu" aria-label="Abrir o cerrar menú lateral">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="admin-panel">
+        <!-- Barra lateral de navegación principal -->
+        <aside class="sidebar" id="sidebar">
+            <h2 aria-label="Panel Administrativo DominiosFull">Panel Administrativo DominiosFull</h2>
+            <nav role="navigation" aria-label="Navegación del panel administrativo">
+                <a href="/admin-inicio" class="active" aria-label="Sección actual: Inicio">Inicio</a>
+                <a href="/admin-clientes.servicios" aria-label="Ir a Clientes y Servicios">Clientes y Servicios</a>
+                <a href="/admin-productos" aria-label="Ir a Gestión de productos y ofertas">Gestión de productos</a>
+                <a href="/admin-opiniones" aria-label="Ir a Gestión de opiniones">Gestión de opiniones</a>
+                <a href="/" aria-label="Volver a la Página Web principal">Volver a la Página Web</a>
+                <a href="{{ url_for('logout') }}" aria-label="Cerrar Sesión administrativa">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Área de contenido principal -->
+        <main class="main-content" role="main">
+            <header>
+                <h1 aria-label="Panel de Inicio">Panel de Inicio</h1>
+            </header>
+
+            <!-- Métricas generales de rendimiento -->
+            <section class="resumen">
+                <div class="caja" tabindex="0" aria-label="Resumen de Ventas: ${{ ventas_total }}">
+                    <h3>Ventas</h3>
+                    <p>${{ '{:,.2f}'.format(ventas_total) }}</p>
+                </div>
+                <div class="caja" tabindex="0" aria-label="Resumen de Clientes: {{ clientes_total }}">
+                    <h3>Clientes</h3>
+                    <p>{{ clientes_total }}</p>
+                </div>
+                <div class="caja" tabindex="0" aria-label="Resumen de Servicios Adquiridos: {{ servicios_total }}">
+                    <h3>Servicios Adquiridos</h3>
+                    <p>{{ servicios_total }}</p>
+                </div>
+            </section>
+
+            <!-- Sección de modificación del nombre de perfil -->
+            <section id="perfil" class="area-perfil">
+                <h2>👤 Mi Perfil</h2>
+                <p>Actualiza tu nombre para mantener tus datos al día.</p>
+
+                <div class="contenedor-flex-centrado">
+                    <form method="POST" action="{{ url_for('actualizar_perfil') }}" class="form-perfil">
+                        <label for="nombre">Nombre</label>
+                        <input
+                            id="nombre"
+                            name="nombre"
+                            type="text"
+                            value="{{ session.get('nombre', '') }}"
+                            required
+                            aria-label="Nombre completo del perfil de usuario">
+
+                        <button type="submit" class="boton-cambiar" aria-label="Guardar cambios de nombre de perfil">
+                            Guardar cambios
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Sección de actualización de contraseña -->
+            <section id="cambiar-contrasena" class="area-perfil seccion-separada">
+                <h2>🔒 Cambiar Contraseña</h2>
+                <p>Para mantener la seguridad de tu cuenta, te recomendamos cambiar tu contraseña regularmente. A continuación, puedes actualizar tu contraseña de forma segura.</p>
+
+                <div class="contenedor-flex-centrado">
+                    <form method="POST" action="{{ url_for('cambiar_contrasena') }}" class="form-perfil">
+
+                        <label for="contraseña-actual">Contraseña Actual:</label>
+                        <div class="password-group">
+                            <input
+                                id="contraseña-actual"
+                                name="contraseña-actual"
+                                type="password"
+                                required
+                                aria-label="Ingresa tu contraseña actual">
+                            <button type="button" class="btn-monito toggle-password" aria-label="Mostrar u ocultar contraseña actual">🙈</button>
+                        </div>
+
+                        <label for="nueva-contraseña">Nueva Contraseña:</label>
+                        <div class="password-group">
+                            <input
+                                id="nueva-contraseña"
+                                name="nueva-contraseña"
+                                type="password"
+                                required
+                                aria-label="Ingresa tu nueva contraseña">
+                            <button type="button" class="btn-monito toggle-password" aria-label="Mostrar u ocultar nueva contraseña">🙈</button>
+                        </div>
+
+                        <label for="confirmar-contraseña">Confirmar Nueva Contraseña:</label>
+                        <div class="password-group">
+                            <input
+                                id="confirmar-contraseña"
+                                name="confirmar-contraseña"
+                                type="password"
+                                required
+                                aria-label="Confirma tu nueva contraseña">
+                            <button type="button" class="btn-monito toggle-password" aria-label="Mostrar u ocultar confirmación de nueva contraseña">🙈</button>
+                        </div>
+
+                        <button type="submit" class="boton-cambiar" aria-label="Confirmar actualización de contraseña">
+                            Cambiar Contraseña
+                        </button>
+
+                    </form>
+                </div>
+            </section>
+
+            <!-- Contenedor dinámico de alertas y mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="toast-container">
+                        {% for category, message in messages %}
+                            <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Listado de transacciones recientes -->
+            <section class="tabla-datos">
+                <h3 aria-label="Tabla de últimos registros">Últimos registros de compras</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Cliente">Cliente</th>
+                            <th aria-label="Columna Producto">Producto</th>
+                            <th aria-label="Columna Precio">Precio</th>
+                            <th aria-label="Columna Fecha">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if ultimas_compras %}
+                            {% for compra in ultimas_compras %}
+                                <tr>
+                                    <td>{{ compra[0] }}</td>
+                                    <td>{{ compra[1] or 'Cliente no encontrado' }}</td>
+                                    <td>{{ compra[2] }}</td>
+                                    <td>${{ '{:,.2f}'.format(compra[3]) }}</td>
+                                    <td>{{ compra[4] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" aria-label="Sin datos en la base de datos">Sin datos en la base de datos</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Pie de página informativo -->
+    <footer class="footer-admin">
+        <div class="footer-izquierda">
+            <p aria-label="Copyright 2026 SoftNova, Panel de Administración">© 2026 <strong>SoftNova</strong> | Panel de Administración</p>
+        </div>
+        <div class="footer-derecha">
+            <span class="version" aria-label="Versión del sistema 1.0">Versión 1.0</span>
+            <span class="separador">|</span>
+            <span class="estado" aria-label="Estado del Sistema: Online"><i class="punto-verde"></i> Sistema Online</span>
+        </div>
+    </footer>
+
+    <!-- Carga diferida de scripts para mejorar el rendimiento -->
+    <script src="../static/js/admin.js" defer></script>
+    <script src="../static/js/contrasena.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes y Servicios | DominiosFull</title>
+
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Panel de administración de clientes y servicios de DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/admin-clientes.servicios">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/admin-clientes.servicios">
+    <meta property="og:title" content="DominiosFull - Admin - Clientes y Servicios">
+    <meta property="og:description" content="Gestión interna de clientes, roles y servicios contratados en DominiosFull.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Clientes y Servicios">
+    <meta name="twitter:description" content="Gestión interna de clientes, roles y servicios contratados en DominiosFull.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <!-- Botón de conmutación del menú lateral -->
+    <button class="menu-toggle" id="btnMenu" aria-label="Abrir o cerrar menú de navegación">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="admin-panel">
+        <!-- Barra lateral de navegación administrativa -->
+        <aside class="sidebar" id="sidebar">
+            <h2 aria-label="Panel Administrativo DominiosFull">Panel Administrativo DominiosFull</h2>
+            <nav role="navigation" aria-label="Navegación del panel administrativo">
+                <a href="/admin-inicio" aria-label="Ir a Inicio">Inicio</a>
+                <a href="/admin-clientes.servicios" class="active" aria-label="Sección actual: Clientes y Servicios">Clientes y Servicios</a>
+                <a href="/admin-productos" aria-label="Ir a Gestión de productos y ofertas">Gestión de productos</a>
+                <a href="/admin-opiniones" aria-label="Ir a Gestión de opiniones">Gestión de opiniones</a>
+                <a href="/" aria-label="Volver a la Página Web principal">Volver a la Página Web</a>
+                <a href="{{ url_for('logout') }}" aria-label="Cerrar Sesión administrativa">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal de la vista -->
+        <main class="main-content" role="main">
+            <header class="header-clientes">
+                <h1>Inventario de Clientes Registrados</h1>
+        
+                {% if session.get('rol')|string|trim|lower == 'superadmin' %}
+                    <a href="{{ url_for('servicios.descargar_backup') }}" class="btn-nuevo btn-backup">
+                        📥 Descargar Backup BD
+                    </a>
+                {% endif %}
+            </header>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="toast-container">
+                        {% for category, message in messages %}
+                            <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <section class="toolbar">
+                <input type="text" id="inputBuscarClientes" placeholder="Buscar por nombre o correo..." aria-label="Buscar por nombre o correo">
+            </section>
+
+            <!-- Definición de variable para verificar si la sesión activa es Samuel Chacón -->
+            {% set es_samuel_logeado = (session.get('usuario')|lower|trim in ['samuel chacón', 'samuel chacon'] or session.get('nombre')|lower|trim in ['samuel chacón', 'samuel chacon']) %}
+
+            <!-- Tabla de datos de clientes -->
+            <section class="tabla-datos">
+                <table id="tablaClientes">
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID">ID</th>
+                            <th aria-label="Columna Nombre">Nombre</th>
+                            <th aria-label="Columna Correo Electrónico">Correo Electrónico</th> 
+                            <th aria-label="Columna Estado">Estado</th>
+                            <th aria-label="Columna Cambiar Rol">Cambiar Rol (Requiere Permiso)</th>
+                            <th aria-label="Columna Acciones">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cliente in clientes %}
+                        {% set es_samuel_fila = (cliente[1]|lower|trim in ['samuel chacón', 'samuel chacon']) %}
+                        {% set es_superadmin_fila = (cliente[0] == 1 or cliente[4]|string|lower|trim == 'superadmin' or cliente[5]|string|lower|trim == 'superadmin') %}
+                        <tr>
+                            <td>{{ cliente[0] }}</td>
+                            <td>{{ cliente[1] }}</td>
+                            <td>{{ cliente[2] }}</td>
+                            <td>
+                                {% if cliente[3] == 'activo' %}
+                                    <span class="texto-activo">Activo</span>
+                                {% else %}
+                                    <span class="texto-suspendido">Suspendido</span>
+                                {% endif %}
+                            </td> 
+                            <td>
+                                {# Si la fila es Samuel Chacón y quien navega NO es Samuel, proteger la fila #}
+                                {% if es_samuel_fila and not es_samuel_logeado %}
+                                    <span class="texto-protegido">Protegido</span>
+
+                                {# Si el usuario logeado ES Samuel Chacón, tiene control total sobre todos #}
+                                {% elif es_samuel_logeado %}
+                                    <form class="cambio-rol" action="{{ url_for('servicios.solicitar_cambio_rol') }}" method="POST">
+                                        <input type="hidden" name="usuario_id" value="{{ cliente[0] }}">
+                                        <select name="nuevo_rol" aria-label="Seleccionar rol para {{ cliente[1] }}">
+                                            <option value="cliente" {% if cliente[4]|string|lower|trim == 'cliente' or cliente[5]|string|lower|trim == 'cliente' %}selected{% endif %}>Cliente</option>
+                                            <option value="admin" {% if cliente[4]|string|lower|trim == 'admin' or cliente[5]|string|lower|trim == 'admin' %}selected{% endif %}>Admin</option>
+                                            {% if session.get('rol') == 'superadmin' %}
+                                                <option value="superadmin" {% if cliente[4]|string|lower|trim == 'superadmin' or cliente[5]|string|lower|trim == 'superadmin' %}selected{% endif %}>Super Admin</option>
+                                            {% endif %}
+                                        </select>
+                                        <button type="submit" aria-label="Pedir autorización de cambio de rol para {{ cliente[1] }}">Pedir Autorización</button>
+                                    </form>
+
+                                {# Para otros administradores: los Super Admins aparecen protegidos #}
+                                {% elif es_superadmin_fila %}
+                                    <span class="texto-protegido">Protegido</span>
+
+                                {# Usuarios normales (Clientes / Admins comunes) #}
+                                {% else %}
+                                    <form class="cambio-rol" action="{{ url_for('servicios.solicitar_cambio_rol') }}" method="POST">
+                                        <input type="hidden" name="usuario_id" value="{{ cliente[0] }}">
+                                        <select name="nuevo_rol" aria-label="Seleccionar rol para {{ cliente[1] }}">
+                                            <option value="cliente" {% if cliente[4]|string|lower|trim == 'cliente' or cliente[5]|string|lower|trim == 'cliente' %}selected{% endif %}>Cliente</option>
+                                            <option value="admin" {% if cliente[4]|string|lower|trim == 'admin' or cliente[5]|string|lower|trim == 'admin' %}selected{% endif %}>Admin</option>
+                                            {% if session.get('rol') == 'superadmin' %}
+                                                <option value="superadmin" {% if cliente[4]|string|lower|trim == 'superadmin' or cliente[5]|string|lower|trim == 'superadmin' %}selected{% endif %}>Super Admin</option>
+                                            {% endif %}
+                                        </select>
+                                        <button type="submit" aria-label="Pedir autorización de cambio de rol para {{ cliente[1] }}">Pedir Autorización</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {# Si la fila es Samuel Chacón y quien navega NO es Samuel, proteger #}
+                                {% if es_samuel_fila and not es_samuel_logeado %}
+                                    <span class="texto-protegido">Protegido</span>
+
+                                {# Si el usuario logeado ES Samuel Chacón, puede activar/suspender a cualquier usuario #}
+                                {% elif es_samuel_logeado %}
+                                    {% if cliente[3] == 'activo' %}
+                                        <button class="btn-suspender" onclick="abrirModalSuspender('{{ cliente[0] }}', '{{ cliente[1] }}')" aria-label="Suspender a {{ cliente[1] }}">
+                                            Suspender
+                                        </button>
+                                    {% else %}
+                                        <form action="{{ url_for('servicios.reactivar_cliente', id=cliente[0]) }}" method="POST" class="formulario-inline">
+                                            <button type="submit" class="btn-activar" aria-label="Activar a {{ cliente[1] }}">Activar</button>
+                                        </form>
+                                    {% endif %}
+
+                                {# Para otros administradores: los Super Admins están protegidos contra suspensión #}
+                                {% elif es_superadmin_fila %}
+                                    <span class="texto-protegido">Protegido</span>
+
+                                {# Acciones normales para clientes/admins regulares #}
+                                {% elif cliente[3] == 'activo' %}
+                                    <button class="btn-suspender" onclick="abrirModalSuspender('{{ cliente[0] }}', '{{ cliente[1] }}')" aria-label="Suspender a {{ cliente[1] }}">
+                                        Suspender
+                                    </button>
+                                {% else %}
+                                    <form action="{{ url_for('servicios.reactivar_cliente', id=cliente[0]) }}" method="POST" class="formulario-inline">
+                                        <button type="submit" class="btn-activar" aria-label="Activar a {{ cliente[1] }}">Activar</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="mensaje-vacio">No hay clientes registrados en el sistema.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Encabezado fuera de la caja blanca para Compras y Servicios -->
+            <header class="header-clientes" style="margin-top: 40px;">
+                <h1>Compras y Servicios Contratados</h1>
+            </header>
+
+            <!-- Buscador fuera de la caja blanca -->
+            <section class="toolbar">
+                <input type="text" id="inputBuscarCompras" placeholder="Buscar por cliente o servicio..." aria-label="Buscar por cliente o servicio">
+            </section>
+
+            <!-- Tabla de datos de compras y servicios contratados (única dentro de la caja) -->
+            <section class="tabla-datos seccion-compras">
+                <table id="tablaCompras">
+                    <thead>
+                        <tr>
+                            <th aria-label="Columna ID Compra">ID Compra</th>
+                            <th aria-label="Columna Cliente">Cliente</th>
+                            <th aria-label="Columna Producto o Servicio">Producto / Servicio</th>
+                            <th aria-label="Columna Precio">Precio</th>
+                            <th aria-label="Columna Fecha">Fecha</th>
+                            <th aria-label="Columna Estado Factura">Estado Factura</th>
+                            <th aria-label="Columna Acción">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for compra in compras %}
+                        <tr>
+                            <td>{{ compra[0] }}</td>
+                            <td>{{ compra[1] }}</td>
+                            <td>{{ compra[2] }}</td>
+                            <td>${{ "{:,.2f}".format(compra[3]) }}</td>
+                            <td>{{ compra[4] }}</td>
+                            <td>
+                                {% if compra[5] == 'si' or compra[7] %}
+                                    {% if compra[6] == 'Pagada' %}
+                                        <span class="texto-pagado">Pagado</span>
+                                    {% else %}
+                                        <span class="texto-facturado">Facturado (Pendiente)</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="texto-pendiente">Pendiente</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {# 1. SI NUNCA SE HA GENERADO FACTURA #}
+                                {% if compra[5] == 'no' and not compra[7] %}
+                                <form action="{{ url_for('servicios.generar_factura_renovacion', compra_id=compra[0]) }}" method="POST" class="formulario-inline">
+                                    <button type="submit" class="btn-factura btn-generar" aria-label="Generar factura para la compra {{ compra[0] }}">
+                                        Generar Factura
+                                    </button>
+                                </form>
+
+                                {# 2. SI YA PASÓ EL AÑO Y DEBE RENOVARSE #}
+                                {% elif compra[8] and compra[8] <= ahora %}
+                                    <form action="{{ url_for('servicios.generar_factura_renovacion', compra_id=compra[0]) }}" method="POST" class="formulario-inline">
+                                        <button type="submit" class="btn-factura btn-renovar" aria-label="Renovar factura para la compra {{ compra[0] }}">
+                                            Renovar Factura
+                                        </button>
+                                    </form>
+
+                                {# 3. SI LA FACTURA SIGUE VIGENTE #}
+                                {% else %}
+                                    <button disabled class="btn-factura btn-emitida" aria-label="Factura emitida para la compra {{ compra[0] }}">
+                                        Emitida
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="mensaje-vacio">No hay registros de compras realizadas.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para ingresar la justificación de suspensión -->
+    <div id="modalSuspension" class="modal-overlay">
+        <div class="modal-contenedor">
+            <h3 id="modalTitulo">Suspender Cliente</h3>
+            <form id="formSuspender" action="" method="POST">
+                <label for="justificacion" class="modal-etiqueta">Escribe la razón de la suspensión (Se enviará por correo):</label>
+                <textarea id="justificacion" name="justificacion" rows="4" class="modal-campo" required aria-label="Justificación de la suspensión"></textarea>
+                
+                <div class="modal-acciones">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn-confirmar-suspension">Confirmar Suspensión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer-admin">
+        <div class="footer-izquierda">
+            <p aria-label="Copyright 2026 SoftNova, Panel de Administración">© 2026 <strong>SoftNova</strong> | Panel de Administración</p>
+        </div>
+        <div class="footer-derecha">
+            <span class="version" aria-label="Versión del sistema 1.0">Versión 1.0</span>
+            <span class="separador">|</span>
+            <span class="estado" aria-label="Estado del Sistema: Online"><i class="punto-verde"></i> Sistema Online</span>
+        </div>
+    </footer>
+
+    <!-- Carga diferida de scripts para mejorar el rendimiento -->
+    <script src="../static/js/admin-clientes.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

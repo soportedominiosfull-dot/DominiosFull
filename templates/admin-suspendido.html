@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Administrativo Restringido | DominiosFull</title>
+    
+    <!-- Meta etiquetas SEO y Control de Indexación -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Página de aviso para cuentas de administrador suspendidas o restringidas en DominiosFull.">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/admin-suspendido">
+
+    <!-- Meta etiquetas Open Graph (OG) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/admin-suspendido">
+    <meta property="og:title" content="DominiosFull - Admin - Acceso Restringido">
+    <meta property="og:description" content="Aviso de suspensión de privilegios administrativos.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Meta etiquetas Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DominiosFull - Admin - Acceso Restringido">
+    <meta name="twitter:description" content="Aviso de suspensión de privilegios administrativos.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="body-suspendido">
+
+    <main class="contenedor-suspendido" role="main">
+        <article class="tarjeta-suspendido">
+            <div class="icono-bloqueo" aria-hidden="true">🚫</div>
+            <h1 aria-label="Cuenta de Administrador Suspendida">Cuenta de Administrador Suspendida</h1>
+            <p>Tus privilegios administrativos en <strong>DominiosFull</strong> han sido revocados o pausados temporalmente por la Dirección General.</p>
+            
+            <section class="caja-info-suspension" aria-label="Detalles de la suspensión">
+                <p><strong>¿Qué significa esto?</strong></p>
+                <ul>
+                    <li>No tienes acceso al Panel Administrativo.</li>
+                    <li>No puedes modificar clientes, productos ni emitir facturas.</li>
+                    <li>La suspensión fue notificada previamente a tu correo corporativo.</li>
+                </ul>
+            </section>
+
+            <p class="nota-contacto">Si consideras que se trata de un error, comunícate directamente con <strong>EL ADMINISTRADOR DEL SISTEMA</strong>.</p>
+
+            <a href="{{ url_for('logout') }}" class="btn-cerrar-sesion-admin" aria-label="Volver al Inicio o Cerrar Sesión">Volver al Inicio / Cerrar Sesión</a>
+        </article>
+    </main>
+
+    <!-- Carga diferida de scripts (por si agregas validaciones o interacción en el futuro) -->
+    <script src="../static/js/admin.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+</body>
+</html>

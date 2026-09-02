@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominios, Hosting Web y Servidores VPS | DominiosFull</title>
+    <meta name="description" content="Asegura tu presencia digital con DominiosFull. Registro de dominios, hosting SSD ultra rápido y servidores VPS con soporte técnico 24/7.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://dominiosfull.pythonanywhere.com/">
+
+    <!-- Previsualización para WhatsApp y Redes Sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dominiosfull.pythonanywhere.com/">
+    <meta property="og:title" content="Dominios, Hosting Web y Servidores VPS - DominiosFull">
+    <meta property="og:description" content="Potencia tu negocio con hosting ultra rápido, registro de dominios y servidores VPS con soporte 24/7.">
+    <meta property="og:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+    <meta property="og:site_name" content="DominiosFull">
+
+    <!-- Previsualización para Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dominios, Hosting Web y Servidores VPS - DominiosFull">
+    <meta name="twitter:description" content="Potencia tu negocio con hosting ultra rápido, registro de dominios y servidores VPS.">
+    <meta name="twitter:image" content="https://dominiosfull.pythonanywhere.com/static/img/logo.png">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+    
+<body>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="toast-container">
+                        {% for category, message in messages %}
+                        <div class="toast mensaje-flash alerta-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+<header class="navbar">        
+    <a href="/" aria-label="Sección actual: Página de inicio">
+        <img src="../static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
+    </a>
+
+    <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav id="navMenu">
+        <a href="/" class="active" aria-label="Sección actual: Página de inicio">Inicio</a>
+        <span class="separadorindex">|</span>
+        <a href="/dominios" aria-label="Página de dominios">Dominios</a>
+        <span class="separadorindex">|</span>
+        <a href="/hosting" aria-label="Página de hosting">Hosting</a>
+        <span class="separadorindex">|</span>
+        <a href="/vps" aria-label="Página de VPS">VPS</a>
+        <span class="separadorindex">|</span>
+        <a href="/soporte" aria-label="Página de soporte">Contacto</a>
+        <span class="separadorindex">|</span>
+        <a href="carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
+        <span class="separadorindex">|</span>
+        
+        {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
+        {% set nombre_usuario = nombre or session.get('nombre') %}
+
+        {% if nombre_usuario %}
+            <div class="usuario-dropdown">
+                <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
+                    {{ nombre_usuario }} 
+                    <span class="role-badge">
+                        {% if rol_limpio == 'superadmin' %}
+                            Super Admin
+                        {% elif rol_limpio == 'admin' %}
+                            Admin
+                        {% else %}
+                            Cliente
+                        {% endif %}
+                    </span> ▾
+                </button>
+                <div id="usuarioMenu" class="usuario-menu" aria-label="Menú de usuario">
+                    {% if rol_limpio in ['admin', 'superadmin'] %}
+                        <a href="{{ url_for('admin_inicio') }}">Panel Admin</a>
+                    {% else %}
+                        <a href="{{ url_for('vista_clientes') }}">Mi perfil</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                </div>
+            </div>
+        {% else %}
+            <a href="login" aria-label="Página de inicio de sesión">Login</a>
+        {% endif %}
+    </nav>                                                
+</header>
+
+    <section class="slider">
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-Dominios1.mp4">
+            </video>
+            <div class="info">
+                <h2>Dominios</h2>
+                <p>Registre su identidad en la red con los mejores precios.</p>
+                <a href="/dominios" class="boton" aria-label="Ver planes de dominios">Ver Planes</a>
+            </div>
+        </div>
+
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-Hosting1.mp4">
+            </video>
+            <div class="info">
+                <h2>Hosting</h2>
+                <p>Servidores de alta calidad para que su web vuele.</p>
+                <a href="/hosting" class="boton" aria-label="Ver planes de hosting">Ver Planes</a>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-VPS1.mp4">
+            </video>
+            <div class="info">
+                <h2>Servidores VPS</h2>
+                <p>Potencia completa para su sitio web.</p>
+                <a href="/vps" class="boton" aria-label="Ver planes de VPS">Ver Planes</a>
+            </div>
+        </div>
+
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-Dominios2.mp4">
+            </video>
+            <div class="info">
+                <h2>Nuestra Misión</h2>
+                <p>"Potenciar la presencia digital de empresas emergentes a través de soluciones de infraestructura web de alto rendimiento, brindando un acompañamiento humano y cercano que garantice que cada cliente nunca se sienta solo en su camino hacia el éxito en línea."</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-Hosting2.mp4">
+            </video>
+            <div class="info">
+                <h2>Nuestra Visión</h2>
+                <p>"Ser el aliado tecnológico referente para los emprendedores en Colombia y Latinoamérica, siendo reconocidos no solo por la robustez de nuestros servicios de hosting y VPS, sino por establecer un estándar de servicio al cliente donde la empatía y la resolución técnica van de la mano."</p>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <video muted>
+                <source src="../static/vid/Vid-VPS2.mp4">
+            </video>
+            <div class="info">
+                <h2>¿Por qué nosotros?</h2>
+                <p>"En DominiosFull somos el aliado estratégico que tu empresa emergente necesita, combinando tecnología de alto rendimiento en hosting, dominios y servidores VPS con una atención humana, cercana y verdaderamente comprometida con tu crecimiento, asegurándonos de que nunca tengas que enfrentar solo los desafíos de tu presencia digital."</p>
+            </div>
+        </div>
+
+        <button class="flecha izquierda" onclick="anterior()" aria-label="Slide anterior - Carrusel">⬅</button>
+        <button class="flecha derecha" onclick="siguiente()" aria-label="Slide siguiente - Carrusel">➡</button>
+    </section>
+
+    <section class="servicios">
+        <h2>Nuestros Servicios</h2>
+        <div class="cards">
+            <a href="/dominios" class="card-link" aria-label="Ir a planes de dominios: Registro y gestión de dominios web para tu negocio">
+                <div class="card1">
+                    <img src="../static/img/dominios.jpg" width="320" height="200" class="card-dm" alt="Servicio de registro y gestión de dominios web">
+                    <h3>Dominios</h3>
+                    <p>Registro y gestión de dominios web para tu negocio.</p>
+                </div>
+            </a>
+            
+            <a href="/hosting" class="card-link" aria-label="Ir a planes de hosting: Alojamiento web de alto rendimiento con soporte técnico y máxima estabilidad para que tu negocio nunca se detenga">
+                <div class="card2">
+                    <h3>Hosting</h3>
+                    <img src="../static/img/hosting.jpg" width="500" height="250" class="card-ht" alt="Servicio de alojamiento web hosting de alto rendimiento">
+                    <p>Alojamiento web de alto rendimiento con soporte técnico y máxima estabilidad para que tu negocio nunca se detenga.</p>
+                </div>
+            </a>
+
+            <a href="/vps" class="card-link" aria-label="Ir a planes de VPS: Servicios de servidor virtual privado para mayor control y personalización de tu infraestructura digital">
+                <div class="card3">
+                    <img src="../static/img/vps.jpg" width="500" height="250" class="card-vps" alt="Servidores virtuales privados VPS para infraestructura digital">
+                    <h3>VPS</h3>
+                    <p>Servicios de servidor virtual privado para mayor control y personalización de tu infraestructura digital.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <h1 class="titulo-beneficios">¿Por qué elegir DominiosFull?</h1>
+
+    <section class="beneficios">
+        <div class="beneficio-item" aria-label="Beneficio de alta velocidad: Servidores optimizados para que tu web cargue en milisegundos">
+            <span class="icon" aria-hidden="true">🚀</span>
+            <h3>Alta Velocidad</h3>
+            <p>Servidores optimizados para que tu web cargue en milisegundos.</p>
+        </div>
+        <div class="beneficio-item" aria-label="Beneficio de seguridad total: Certificados SSL gratuitos y protección contra ataques">
+            <span class="icon" aria-hidden="true">🔒</span>
+            <h3>Seguridad Total</h3>
+            <p>Certificados SSL gratuitos y protección contra ataques en todos los planes.</p>
+        </div>
+        <div class="beneficio-item" aria-label="Beneficio de soporte 24/7: Equipo experto listo para ayudarte en cualquier momento del día">
+            <span class="icon" aria-hidden="true">🎧</span>
+            <h3>Soporte 24/7</h3>
+            <p>Equipo experto listo para ayudarte en cualquier momento del día.</p>
+        </div>
+    </section>
+
+    <section class="seccion-opiniones">
+        <h2 class="titulo-opiniones">Lo que dicen nuestros clientes</h2>
+        
+        <div class="carrusel-opiniones-container">
+            <div class="carrusel-opiniones-track" id="opinionesTrack">
+                {% if resenas_destacadas %}
+                    {% for resena in resenas_destacadas %}
+                        <div class="tarjeta-opinion">
+                            <div class="estrellas-display">
+                                {% for _ in range(resena[1]) %}★{% endfor %}
+                            </div>
+                            <p class="comentario-texto">"{{ resena[0] }}"</p>
+                            <h4 class="cliente-nombre">- {{ resena[2] }}</h4>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="tarjeta-opinion">
+                        <p class="comentario-texto">Aún no hay opiniones destacadas. ¡Sé el primero en dejar la tuya desde tu panel de cliente!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="contenedor-ver-todas">
+            <button class="btn-ver-todas" onclick="abrirFiltroOpiniones()">Ver todas las opiniones 💬</button>
+        </div>
+    </section>
+
+    <div id="filtroOpiniones" class="filtro-opiniones">
+        <div class="filtro-opiniones-contenido">
+            <span class="cerrar-filtro" onclick="cerrarFiltroOpiniones()">&times;</span>
+            <h2>Todas las Opiniones de Nuestros Clientes</h2>
+
+            <div class="filtros-estrellas">
+                <button class="btn-filtro active" onclick="filtrarOpiniones('todas', event)">Todas</button>
+                <button class="btn-filtro" onclick="filtrarOpiniones('5', event)">5 ★</button>
+                <button class="btn-filtro" onclick="filtrarOpiniones('4', event)">4 ★</button>
+                <button class="btn-filtro" onclick="filtrarOpiniones('3', event)">3 ★</button>
+                <button class="btn-filtro" onclick="filtrarOpiniones('2', event)">2 ★</button>
+                <button class="btn-filtro" onclick="filtrarOpiniones('1', event)">1 ★</button>
+            </div>
+
+            <div class="lista-todas-opiniones">
+                {% for r in todas_resenas %}
+                    <div class="item-opinion-filtro" data-estrellas="{{ r[1] }}">
+                        <div class="header-opinion">
+                            <strong>{{ r[2] }}</strong>
+                            <span class="estrellas-display">{% for _ in range(r[1]) %}★{% endfor %}</span>
+                        </div>
+                        <p>{{ r[0] }}</p>
+                        <small class="fecha-opinion">{{ r[3].strftime('%d/%m/%Y') if r[3] else '' }}</small>
+                    </div>
+                {% else %}
+                    <p>No hay opiniones registradas todavía.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div id="cookie-banner" class="cookie-banner" style="display: none;" role="dialog" aria-label="Aviso de Cookies">
+        <div class="cookie-contenido">
+            <p>
+                🍪 Utilizamos cookies para mejorar tu experiencia de navegación, recordar tus preferencias y analizar el tráfico de nuestro sitio. Puedes aceptar todas las cookies o rechazar las no esenciales. Consulta nuestra <a href="/privacidad" target="_blank">Política de Privacidad</a>.
+            </p>
+            <div class="cookie-botones">
+                <button id="accept-cookies" class="btn-cookie btn-cookie-aceptar">Aceptar todas</button>
+                <button id="reject-cookies" class="btn-cookie btn-cookie-rechazar">Rechazar no esenciales</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>SoftNova</h3>
+                <p>"Conectamos tu marca con el mundo digital."</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="/terminos" aria-label="Ir a términos de servicio">Términos de servicio</a></li>
+                    <li><a href="/privacidad" aria-label="Ir a política de privacidad">Privacidad y Protección de Datos</a></li>
+                    <li><a href="/soporte" aria-label="Ir a soporte técnico">Soporte Técnico</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><a href="mailto:soporte.dominiosfull@gmail.com" aria-label="Enviar correo electrónico a soporte.dominiosfull@gmail.com">soporte.dominiosfull@gmail.com</a></p>
+            </div>
+        </div>
+            <div class="Whatsapp">
+                <button class="Whatsapp-desplegable" aria-label="Abrir canales de atención de WhatsApp">
+                    <img src="../static/img/whatsapp.png" width="100" height="100" alt="Logo de Whatsapp" loading="lazy">
+                </button>
+                <div class="Whatsapp-menu">
+                    <a href="https://wa.me/+573172293270" target="_blank" aria-label="Contactar con Atención al Cliente en WhatsApp"><p>Atención al Cliente</p></a>
+                    <a href="https://wa.me/+573112913437" target="_blank" aria-label="Contactar con Soporte Técnico en WhatsApp"><p>Soporte Técnico</p></a>
+                    <a href="https://wa.me/+573147991338" target="_blank" aria-label="Contactar con Marketing en WhatsApp"><p>Marketing</p></a>
+                    <a href="https://wa.me/+573134138186" target="_blank" aria-label="Contactar con Ventas en WhatsApp"><p>Respuesta Rápida</p></a>
+                </div>
+            </div>
+            <div class="Instagram">
+                <a href="https://www.instagram.com/dominios_full/" target="_blank" aria-label="Ir a nuestro perfil de Instagram">
+                    <img src="../static/img/instagram.png" width="100" height="100" alt="Logo de Instagram" loading="lazy">
+                </a>
+            </div>
+            <div class="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=61572556859420" target="_blank" aria-label="Ir a nuestro perfil de Facebook">
+                    <img src="../static/img/facebook.png" width="100" height="100" alt="Logo de Facebook" loading="lazy">
+                </a>
+            </div>
+        <div class="copyright">
+            <p>&copy; 2026 SoftNova. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Vinculación de los scripts de la aplicación -->
+    <script src="../static/js/whatsapp.js" defer></script>
+    <script src="../static/js/usuario-menu.js" defer></script>
+    <script src="../static/js/carrusel.js" defer></script>
+    <script src="../static/js/cookies.js" defer></script>
+    <script src="../static/js/resenas.js" defer></script>
+    <script src="/static/js/msn-flash.js" defer></script>
+    <script src="../static/js/talkback.js" defer></script>
+    <script src="../static/js/menu.js" defer></script>
+</body>
+</html>
