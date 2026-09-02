@@ -755,8 +755,7 @@ footer ul {
 }
 
 footer .Whatsapp, 
-footer .Instagram, 
-footer .Facebook {
+footer .Instagram {
     position: fixed;
     right: 20px;
     display: flex;
@@ -770,11 +769,9 @@ footer .Facebook {
 
 footer .Whatsapp { bottom: 20px; }
 footer .Instagram { bottom: 90px; }
-footer .Facebook { bottom: 160px; }
 
 footer .Whatsapp img, 
-footer .Instagram img, 
-footer .Facebook img {
+footer .Instagram img{
     width: 50px;
     height: 50px;
 }
@@ -893,26 +890,22 @@ footer .Whatsapp-desplegable {
     .contact-title {
         font-size: 1.4rem;
     }
-
-    footer .Facebook, 
+ 
     footer .Instagram, 
     footer .Whatsapp {
         right: 15px !important;
         padding: 0 !important;
     }
 
-    footer .Facebook { bottom: 140px; }
     footer .Instagram { bottom: 80px; }
     footer .Whatsapp { bottom: 20px; }
-
-    footer .Facebook img, 
+ 
     footer .Instagram img, 
     footer .Whatsapp img {
         width: 45px;
         height: 45px;
     }
 
-    footer .Facebook img:hover,
     footer .Instagram img:hover,
     footer .Whatsapp img:hover {
         opacity: 0.9;
