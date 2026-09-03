@@ -9,11 +9,11 @@ app = Flask(__name__)
 
 app.secret_key = 'Proyectosena2026C-M-C'
 
-# Configuración de la base de datos
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '12345'  # Revisar que la contraseña coincida con el MySQL local
-app.config['MYSQL_DB'] = 'dominios_full'
+# Configuración de la base de datos (Alwaysdata)
+app.config['MYSQL_HOST'] = 'mysql-dominiosfull.alwaysdata.net'
+app.config['MYSQL_USER'] = 'dominiosfull'
+app.config['MYSQL_PASSWORD'] = 'ProyectoSENA-server1427'
+app.config['MYSQL_DB'] = 'dominiosfull_bd'
 app.config['MYSQL_DATABASE_CHARSET'] = 'utf8mb4'
 
 mysql = MySQL(app)
