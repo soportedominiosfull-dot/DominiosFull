@@ -622,3 +622,16 @@ if __name__ == '__main__':
 # 2. Generar un nuevo entorno virtual: python -m venv venv
 # 3. Instalar dependencias necesarias: pip install flask flask_mysqldb flask-mail itsdangerous reportlab datetime requests
 # 4. Verificar la contraseña local de MySQL si difiere del valor por defecto '12345'
+
+#CARGAR A GITHUB
+# 1. Verificar los archivos modificados
+#git status
+
+# 2. Agregar todos los cambios al área de preparación
+#git add .
+
+# 3. Confirmar los cambios con un mensaje descriptivo
+#git commit -m "MENSAJE DE LOS CAMBIOS REALIZADOS"
+
+# 4. Subir los cambios al repositorio remoto (reemplaza 'main' por 'master' si tu rama usa ese nombre)
+#git push origin main
