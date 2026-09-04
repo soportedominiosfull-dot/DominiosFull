@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 
 app = Flask(__name__)
+application = app
 
 app.secret_key = 'Proyectosena2026C-M-C'
 
@@ -608,7 +609,7 @@ def add_header(response):
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 # --- NOTAS DE EJECUCIÓN ---
