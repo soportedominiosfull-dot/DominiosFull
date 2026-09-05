@@ -1,19 +1,19 @@
-function toggleUsuarioMenu() {
-    const menu = document.getElementById('usuarioMenu');
-    if (!menu) {
-        return;
-    }
-    menu.classList.toggle('show');
-}
+document.addEventListener('DOMContentLoaded', function () {
+    const usuarioBtn = document.querySelector('.usuario-btn');
+    const usuarioMenu = document.getElementById('usuarioMenu');
 
-document.addEventListener('click', function (event) {
-    const dropdown = document.querySelector('.usuario-dropdown');
-    const menu = document.getElementById('usuarioMenu');
-    if (!dropdown || !menu) {
-        return;
-    }
+    if (usuarioBtn && usuarioMenu) {
+        usuarioBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const visible = usuarioMenu.classList.toggle('show');
+            usuarioBtn.setAttribute('aria-expanded', visible ? 'true' : 'false');
+        });
 
-    if (!dropdown.contains(event.target)) {
-        menu.classList.remove('show');
+        document.addEventListener('click', function (event) {
+            if (!usuarioBtn.contains(event.target) && !usuarioMenu.contains(event.target)) {
+                usuarioMenu.classList.remove('show');
+                usuarioBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
     }
 });

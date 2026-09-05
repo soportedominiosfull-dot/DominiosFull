@@ -35,24 +35,25 @@
             <img src="/static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
         </a>
 
-        <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú de navegación">
+        <!-- Limpiado onclick -->
+        <button id="btnMenu" class="menu-toggle" aria-label="Abrir menú de navegación">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
         <nav id="navMenu" aria-label="Navegación principal">
-            <a href="/">Inicio</a>
+            <a href="/" aria-label="Página de inicio">Inicio </a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/dominios">Dominios</a>
+            <a href="/dominios" aria-label="Página de dominios">Dominios</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/hosting">Hosting</a>
+            <a href="/hosting" aria-label="Página de hosting">Hosting</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/vps">VPS</a>
+            <a href="/vps" aria-label="Página de VPS">VPS</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/soporte">Contacto</a>
+            <a href="/soporte" aria-label="Página de soporte y contacto">Contacto</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/carrito" class="cart-link active" aria-current="page">🛒 Carrito</a>
+            <a href="/carrito" class="cart-link active" aria-current="page" aria-label="Sección actual: Carrito de compras">🛒 Carrito</a>
             <span class="separadorindex" aria-hidden="true">|</span>
             
             {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
@@ -60,7 +61,8 @@
 
             {% if nombre_usuario %}
                 <div class="usuario-dropdown">
-                    <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
+                    <!-- Limpiado onclick -->
+                    <button type="button" class="usuario-btn" aria-haspopup="true" aria-expanded="false">
                         {{ nombre_usuario }} 
                         <span class="role-badge">
                             {% if rol_limpio == 'superadmin' %}
@@ -84,7 +86,7 @@
             {% else %}
                 <a href="/login">Login</a>
             {% endif %}
-        </nav>                                                
+        </nav>                                                               
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}

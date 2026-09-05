@@ -43,7 +43,7 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 70px;
-    padding: 10px 50px;
+    padding: 10px 25px;
     background: var(--color-primary);
     color: var(--color-white);
 }
@@ -51,7 +51,8 @@ body {
 .navbar img {
     display: block;
     width: auto;
-    height: 55px;
+    max-height: 50px;
+    object-fit: contain;
 }
 
 .navbar nav {
@@ -85,8 +86,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.cart-link {
+    white-space: nowrap; 
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; 
+}
+
 .separadorindex {
-    margin: 5px;
+    margin: 0 4px;
     color: rgba(255, 255, 255, 0.55);
     cursor: default;
 }
@@ -108,57 +116,37 @@ body {
     border-radius: 2px;
 }
 
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex;
-    }
-
+/* Oculta separadores en pantallas medianas/laptops para no saturar espacio */
+@media (max-width: 1180px) {
     .separadorindex {
         display: none;
     }
 
-    .navbar nav {
-        display: none;
+    .navbar nav a {
+        padding: 5px 7px;
+    }
+}
+
+/* Activa menú móvil antes de que los botones choquen (804px) */
+@media (max-width: 804px) {
+    .menu-toggle {
+        display: flex !important;
+    }
+
+    /* Centra el contenedor del logo en medio de la navbar */
+    .navbar > a {
         position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background: var(--color-primary);
-        flex-direction: column;
-        align-items: stretch;
-        padding: 15px 20px;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
     }
 
-    .navbar nav.active {
-        display: flex !important;
-    }
-}
-.menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 5px;
-    padding: 5px;
-}
-
-.menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background-color: var(--color-white);
-    border-radius: 2px;
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex !important;
-    }
-
-    .separadorindex {
-        display: none !important;
+    .navbar img {
+        width: auto !important;
+        max-height: 45px !important;
+        height: auto !important;
+        margin: 0 !important;
     }
 
     .navbar nav {
@@ -192,41 +180,40 @@ body {
         padding: 10px;
     }
 
+    /* 1. Establece la referencia de posicionamiento para la tarjeta flotante */
     .usuario-dropdown {
         width: 100%;
+        display: flex;
+        justify-content: center; /* Centra la caja completa */
         margin-top: 5px;
+        position: relative;
     }
 
+    /* 2. Centra el texto e íconos dentro del botón de perfil */
     .usuario-btn {
-        width: 100%;
-        text-align: left;
-    }
-    }
-    
-    .navbar nav.active {
-        display: flex !important;
-    }
-
-    .navbar nav a {
-        margin: 4px 0;
-        padding: 10px;
-    }
-
-    .usuario-dropdown {
-        width: 100%;
-        margin-top: 5px;
-    }
-
-    .usuario-btn {
-        width: 100%;
-        text-align: left;
-    }
-    .cart-link {
-        white-space: nowrap; 
+        width: auto; /* Evita que el recuadro se estire al 100% */
+        padding: 8px 20px;
         display: inline-flex;
         align-items: center;
-        gap: 6px; 
+        gap: 8px;
     }
+
+    /* 3. Ajusta la tarjeta flotante exactamente al centro del contenedor */
+    .usuario-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        text-align: center;
+        min-width: 220px;
+        z-index: 1100;
+    }
+
+    .usuario-menu a {
+        text-align: center;
+    }
+}
 
 /* --- 1.4 Hero y Carrusel (Slider) --- */
 .hero {
@@ -240,6 +227,7 @@ body {
     position: relative;
     width: 100%;
     height: 70vh;
+    min-height: 460px; /* Evita que el carrusel se aplaste excesivamente en móviles */
     background-color: #000000;
     overflow: hidden;
 }
@@ -262,10 +250,11 @@ body {
     visibility: visible;
 }
 
-video {
+.slide video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none; /* Bloquea clics/toques directos para evitar que iOS abra el reproductor */
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -275,11 +264,14 @@ video {
     position: absolute;
     top: 50%;
     left: 8%;
+    width: calc(100% - 160px); /* Previene solapamientos con las flechas laterales */
     max-width: 500px;
     padding: 30px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     color: var(--color-white);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     text-align: left;
     transform: translateY(-50%);
@@ -288,19 +280,21 @@ video {
 }
 
 .info h2 {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: var(--color-white);
-    font-size: 2.5rem;
+    font-size: 2.2rem;
 }
 
 .info p {
     margin-bottom: 20px;
     color: #eeeeee;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .info a {
+    position: relative;
+    z-index: 5; /* Prioridad táctil sobre las capas del video y contenedores */
     display: inline-block;
     padding: 12px 25px;
     background-color: var(--color-primary);
@@ -321,14 +315,14 @@ video {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
-    padding: 10px;
-    background: none;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.4);
     color: var(--color-white);
     border: none;
-    border-radius: 10px;
-    font-size: 40px;
+    border-radius: 50%;
+    font-size: 26px;
     cursor: pointer;
     transform: translateY(-50%);
     transition: var(--transition-fast);
@@ -336,11 +330,55 @@ video {
 }
 
 .flecha:hover {
-    background: rgba(0, 0, 0, 0.753);
+    background: rgba(0, 0, 0, 0.8);
 }
 
-.izquierda { left: 10px; }
-.derecha { right: 10px; }
+.izquierda { left: 15px; }
+.derecha { right: 15px; }
+
+/* --- Responsive para dispositivos móviles (iOS / Android) --- */
+@media (max-width: 768px) {
+    .slider {
+        height: 60vh;
+        min-height: 420px;
+    }
+
+    .info {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 82%;
+        max-width: 100%;
+        padding: 18px;
+        text-align: center;
+    }
+
+    .info h2 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+    }
+
+    .info p {
+        font-size: 0.88rem;
+        line-height: 1.35;
+        margin-bottom: 14px;
+    }
+
+    .info a {
+        padding: 10px 18px;
+        font-size: 0.88rem;
+    }
+
+    .flecha {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    .izquierda { left: 6px; }
+    .derecha { right: 6px; }
+}
 
 /* --- 1.5 Tarjetas de Servicios --- */
 .servicios {
@@ -806,10 +844,6 @@ footer .Whatsapp-desplegable {
 
 /* --- 1.11 Adaptación Responsive (Media Queries) --- */
 @media (max-width: 1024px) {
-    .navbar img {
-        width: 200px;
-        height: auto;
-    }
 
     .info {
         left: 5%;
@@ -818,33 +852,6 @@ footer .Whatsapp-desplegable {
 }
 
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        justify-content: center !important;
-        height: auto;
-        padding: 15px 10px !important;
-    }
-
-    .navbar img {
-        position: relative !important;
-        display: block;
-        width: 150px !important;
-        height: auto !important;
-        margin: 0 auto 15px auto;
-    }
-
-    .navbar nav {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-        flex-wrap: wrap;
-    }
-
-    .navbar nav a {
-        margin: 5px 8px !important;
-        font-size: 0.9rem;
-    }
 
     .slider {
         height: 50vh;

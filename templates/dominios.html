@@ -31,22 +31,22 @@
             <img src="/static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
         </a>
 
-        <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú de navegación">
+        <button id="btnMenu" class="menu-toggle" aria-label="Abrir menú de navegación">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
         <nav id="navMenu" aria-label="Navegación principal">
-            <a href="/">Inicio</a>
+            <a href="/" aria-label="Página de inicio">Inicio</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/dominios" class="active" aria-current="page">Dominios</a>
+            <a href="/dominios" class="active" aria-current="page" aria-label="Sección actual: Página de dominios">Dominios</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/hosting">Hosting</a>
+            <a href="/hosting" aria-label="Página de hosting">Hosting</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/vps">VPS</a>
+            <a href="/vps" aria-label="Página de VPS">VPS</a>
             <span class="separadorindex" aria-hidden="true">|</span>
-            <a href="/soporte">Contacto</a>
+            <a href="/soporte" aria-label="Página de soporte y contacto">Contacto</a>
             <span class="separadorindex" aria-hidden="true">|</span>
             <a href="/carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
             <span class="separadorindex" aria-hidden="true">|</span>
@@ -56,7 +56,7 @@
 
             {% if nombre_usuario %}
                 <div class="usuario-dropdown">
-                    <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="usuario-btn" aria-haspopup="true" aria-expanded="false">
                         {{ nombre_usuario }} 
                         <span class="role-badge">
                             {% if rol_limpio == 'superadmin' %}
@@ -80,7 +80,7 @@
             {% else %}
                 <a href="/login">Login</a>
             {% endif %}
-        </nav>                                                
+        </nav>                                                               
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -115,11 +115,11 @@
         <section class="seccion-dominios">
             <h2 class="titulo-seccion">Nuestras extensiones disponibles</h2>
             <div class="filtros">
-                <button class="btn-filtro activo" onclick="filtrar('popular', this)" aria-label="Filtrar dominios populares">Populares</button>
-                <button class="btn-filtro" onclick="filtrar('todos', this)" aria-label="Ver todos los dominios">Todos</button>
+                <button class="btn-filtro activo" data-filtro="popular" aria-label="Filtrar dominios populares">Populares</button>
+                <button class="btn-filtro" data-filtro="todos" aria-label="Ver todos los dominios">Todos</button>
                 <label class="filtro-orden" for="ordenar-dominios">
                     <span>Ordenar por</span>
-                    <select id="ordenar-dominios" onchange="ordenarDominios(this.value)">
+                    <select id="ordenar-dominios">
                         <option value="default">Predeterminado</option>
                         <option value="precio-asc">Precio (Ascendente)</option>
                         <option value="precio-desc">Precio (Descendente)</option>
@@ -228,7 +228,7 @@
                 <a href="https://wa.me/+573134138186" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Ventas en WhatsApp"><p>Respuesta Rápida</p></a>
             </div>
         </div>
-        
+
         <div class="Instagram">
             <a href="https://www.instagram.com/dominios_full/" target="_blank" rel="noopener noreferrer" aria-label="Ir a nuestro perfil de Instagram">
                 <img src="/static/img/instagram.png" width="100" height="100" alt="Logo de Instagram" loading="lazy">

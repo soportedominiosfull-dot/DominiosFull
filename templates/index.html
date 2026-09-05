@@ -41,7 +41,7 @@
         <img src="../static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
     </a>
 
-    <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú">
+    <button id="btnMenu" class="menu-toggle" aria-label="Abrir menú">
         <span></span>
         <span></span>
         <span></span>
@@ -56,110 +56,110 @@
         <span class="separadorindex">|</span>
         <a href="/vps" aria-label="Página de VPS">VPS</a>
         <span class="separadorindex">|</span>
-        <a href="/soporte" aria-label="Página de soporte">Contacto</a>
+        <a href="/soporte" aria-label="Página de soporte y contacto">Contacto</a>
         <span class="separadorindex">|</span>
         <a href="carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
         <span class="separadorindex">|</span>
         
-        {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
-        {% set nombre_usuario = nombre or session.get('nombre') %}
+            {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
+            {% set nombre_usuario = nombre or session.get('nombre') %}
 
-        {% if nombre_usuario %}
-            <div class="usuario-dropdown">
-                <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
-                    {{ nombre_usuario }} 
-                    <span class="role-badge">
-                        {% if rol_limpio == 'superadmin' %}
-                            Super Admin
-                        {% elif rol_limpio == 'admin' %}
-                            Admin
+            {% if nombre_usuario %}
+                <div class="usuario-dropdown">
+                    <button type="button" class="usuario-btn" aria-haspopup="true" aria-expanded="false" aria-controls="usuarioMenu">
+                        {{ nombre_usuario }} 
+                        <span class="role-badge">
+                            {% if rol_limpio == 'superadmin' %}
+                                Super Admin
+                            {% elif rol_limpio == 'admin' %}
+                                Admin
+                            {% else %}
+                                Cliente
+                            {% endif %}
+                        </span> ▾
+                    </button>
+                    <div id="usuarioMenu" class="usuario-menu" role="menu" aria-label="Menú de usuario">
+                        {% if rol_limpio in ['admin', 'superadmin'] %}
+                            <a href="{{ url_for('admin_inicio') }}" role="menuitem">Panel Admin</a>
                         {% else %}
-                            Cliente
+                            <a href="{{ url_for('vista_clientes') }}" role="menuitem">Mi perfil</a>
                         {% endif %}
-                    </span> ▾
-                </button>
-                <div id="usuarioMenu" class="usuario-menu" aria-label="Menú de usuario">
-                    {% if rol_limpio in ['admin', 'superadmin'] %}
-                        <a href="{{ url_for('admin_inicio') }}">Panel Admin</a>
-                    {% else %}
-                        <a href="{{ url_for('vista_clientes') }}">Mi perfil</a>
-                    {% endif %}
-                    <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                        <a href="{{ url_for('logout') }}" role="menuitem">Cerrar Sesión</a>
+                    </div>
                 </div>
-            </div>
-        {% else %}
-            <a href="login" aria-label="Página de inicio de sesión">Login</a>
-        {% endif %}
-    </nav>                                                
-</header>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </nav>                                                               
+    </header>
 
-    <section class="slider">
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-Dominios1.mp4">
-            </video>
-            <div class="info">
-                <h2>Dominios</h2>
-                <p>Registre su identidad en la red con los mejores precios.</p>
-                <a href="/dominios" class="boton" aria-label="Ver planes de dominios">Ver Planes</a>
-            </div>
+<section class="slider">
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-Dominios1.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>Dominios</h2>
+            <p>Registre su identidad en la red con los mejores precios.</p>
+            <a href="/dominios" class="boton" aria-label="Ver planes de dominios">Ver Planes</a>
         </div>
+    </div>
 
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-Hosting1.mp4">
-            </video>
-            <div class="info">
-                <h2>Hosting</h2>
-                <p>Servidores de alta calidad para que su web vuele.</p>
-                <a href="/hosting" class="boton" aria-label="Ver planes de hosting">Ver Planes</a>
-            </div>
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-Hosting1.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>Hosting</h2>
+            <p>Servidores de alta calidad para que su web vuele.</p>
+            <a href="/hosting" class="boton" aria-label="Ver planes de hosting">Ver Planes</a>
         </div>
-        
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-VPS1.mp4">
-            </video>
-            <div class="info">
-                <h2>Servidores VPS</h2>
-                <p>Potencia completa para su sitio web.</p>
-                <a href="/vps" class="boton" aria-label="Ver planes de VPS">Ver Planes</a>
-            </div>
-        </div>
+    </div>
 
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-Dominios2.mp4">
-            </video>
-            <div class="info">
-                <h2>Nuestra Misión</h2>
-                <p>"Potenciar la presencia digital de empresas emergentes a través de soluciones de infraestructura web de alto rendimiento, brindando un acompañamiento humano y cercano que garantice que cada cliente nunca se sienta solo en su camino hacia el éxito en línea."</p>
-            </div>
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-VPS1.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>Servidores VPS</h2>
+            <p>Potencia completa para su sitio web.</p>
+            <a href="/vps" class="boton" aria-label="Ver planes de VPS">Ver Planes</a>
         </div>
+    </div>
 
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-Hosting2.mp4">
-            </video>
-            <div class="info">
-                <h2>Nuestra Visión</h2>
-                <p>"Ser el aliado tecnológico referente para los emprendedores en Colombia y Latinoamérica, siendo reconocidos no solo por la robustez de nuestros servicios de hosting y VPS, sino por establecer un estándar de servicio al cliente donde la empatía y la resolución técnica van de la mano."</p>
-            </div>
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-Dominios2.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>Nuestra Misión</h2>
+            <p>"Potenciar la presencia digital de empresas emergentes a través de soluciones de infraestructura web de alto rendimiento, brindando un acompañamiento humano y cercano que garantice que cada cliente nunca se sienta solo en su camino hacia el éxito en línea."</p>
         </div>
-        
-        <div class="slide">
-            <video muted>
-                <source src="../static/vid/Vid-VPS2.mp4">
-            </video>
-            <div class="info">
-                <h2>¿Por qué nosotros?</h2>
-                <p>"En DominiosFull somos el aliado estratégico que tu empresa emergente necesita, combinando tecnología de alto rendimiento en hosting, dominios y servidores VPS con una atención humana, cercana y verdaderamente comprometida con tu crecimiento, asegurándonos de que nunca tengas que enfrentar solo los desafíos de tu presencia digital."</p>
-            </div>
-        </div>
+    </div>
 
-        <button class="flecha izquierda" onclick="anterior()" aria-label="Slide anterior - Carrusel">⬅</button>
-        <button class="flecha derecha" onclick="siguiente()" aria-label="Slide siguiente - Carrusel">➡</button>
-    </section>
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-Hosting2.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>Nuestra Visión</h2>
+            <p>"Ser el aliado tecnológico referente para los emprendedores en Colombia y Latinoamérica, siendo reconocidos no solo por la robustez de nuestros servicios de hosting y VPS, sino por establecer un estándar de servicio al cliente donde la empatía y la resolución técnica van de la mano."</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
+            <source src="../static/vid/Vid-VPS2.mp4" type="video/mp4">
+        </video>
+        <div class="info">
+            <h2>¿Por qué nosotros?</h2>
+            <p>"En DominiosFull somos el aliado estratégico que tu empresa emergente necesita, combinando tecnología de alto rendimiento en hosting, dominios y servidores VPS con una atención humana, cercana y verdaderamente comprometida con tu crecimiento, asegurándonos de que nunca tengas que enfrentar solo los desafíos de tu presencia digital."</p>
+        </div>
+    </div>
+
+    <button id="btnSlideAnt" class="flecha izquierda" aria-label="Slide anterior - Carrusel">⬅</button>
+    <button id="btnSlideSig" class="flecha derecha" aria-label="Slide siguiente - Carrusel">➡</button>
+</section>
 
     <section class="servicios">
         <h2>Nuestros Servicios</h2>
@@ -234,22 +234,25 @@
         </div>
 
         <div class="contenedor-ver-todas">
-            <button class="btn-ver-todas" onclick="abrirFiltroOpiniones()">Ver todas las opiniones 💬</button>
+            <!-- ID agregado para capturar evento JS -->
+            <button id="btnAbrirFiltro" class="btn-ver-todas">Ver todas las opiniones 💬</button>
         </div>
     </section>
 
     <div id="filtroOpiniones" class="filtro-opiniones">
         <div class="filtro-opiniones-contenido">
-            <span class="cerrar-filtro" onclick="cerrarFiltroOpiniones()">&times;</span>
+            <!-- ID agregado para capturar evento JS -->
+            <span id="btnCerrarFiltro" class="cerrar-filtro">&times;</span>
             <h2>Todas las Opiniones de Nuestros Clientes</h2>
 
+            <!-- Atributos data-filtro agregados en reemplazo de onclick -->
             <div class="filtros-estrellas">
-                <button class="btn-filtro active" onclick="filtrarOpiniones('todas', event)">Todas</button>
-                <button class="btn-filtro" onclick="filtrarOpiniones('5', event)">5 ★</button>
-                <button class="btn-filtro" onclick="filtrarOpiniones('4', event)">4 ★</button>
-                <button class="btn-filtro" onclick="filtrarOpiniones('3', event)">3 ★</button>
-                <button class="btn-filtro" onclick="filtrarOpiniones('2', event)">2 ★</button>
-                <button class="btn-filtro" onclick="filtrarOpiniones('1', event)">1 ★</button>
+                <button class="btn-filtro active" data-filtro="todas">Todas</button>
+                <button class="btn-filtro" data-filtro="5">5 ★</button>
+                <button class="btn-filtro" data-filtro="4">4 ★</button>
+                <button class="btn-filtro" data-filtro="3">3 ★</button>
+                <button class="btn-filtro" data-filtro="2">2 ★</button>
+                <button class="btn-filtro" data-filtro="1">1 ★</button>
             </div>
 
             <div class="lista-todas-opiniones">

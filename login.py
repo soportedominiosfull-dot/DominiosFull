@@ -26,6 +26,20 @@ def validar_recaptcha(response_token):
 
 @login_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    # REDIRECCIÓN SI YA EXISTE UNA SESIÓN ACTIVA O PROCESO 2FA EN CURSO
+    if 'user_id' in session:
+        rol = str(session.get('rol', '')).strip().lower()
+        estado = str(session.get('estado', '')).strip().lower()
+
+        if estado == 'suspendido':
+            if rol in ['admin', 'superadmin']:
+                return redirect(url_for('admin_suspendido'))
+            return redirect(url_for('cuenta_suspendida'))
+
+        if rol in ['admin', 'superadmin']:
+            return redirect(url_for('admin_inicio'))
+        return redirect(url_for('vista_clientes'))
+    
     from app import mysql, mail
     if request.method == 'POST':
 

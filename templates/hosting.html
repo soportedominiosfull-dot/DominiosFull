@@ -27,28 +27,28 @@
     
 <body>
     <header class="navbar">        
-        <a href="/" aria-label="Sección actual: Página de inicio">
-            <img src="../static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
+        <a href="/" aria-label="Página de inicio">
+            <img src="/static/img/logo.png" width="400" height="169" alt="Logo de DominiosFull" loading="eager" fetchpriority="high">
         </a>
 
-        <button id="btnMenu" class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')" aria-label="Abrir menú de navegación">
+        <button id="btnMenu" class="menu-toggle" aria-label="Abrir menú de navegación">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
         <nav id="navMenu">
-            <a href="/" aria-label="Sección actual: Página de inicio">Inicio</a>
+            <a href="/" aria-label="Página de inicio">Inicio</a>
             <span class="separadorindex">|</span>
             <a href="/dominios" aria-label="Página de dominios">Dominios</a>
             <span class="separadorindex">|</span>
-            <a href="/hosting" class="active" aria-label="Página de hosting">Hosting</a>
+            <a href="/hosting" class="active" aria-label="Sección actual: Página de hosting">Hosting</a>
             <span class="separadorindex">|</span>
             <a href="/vps" aria-label="Página de VPS">VPS</a>
             <span class="separadorindex">|</span>
-            <a href="/soporte" aria-label="Página de soporte">Contacto</a>
+            <a href="/soporte" aria-label="Página de soporte y contacto">Contacto</a>
             <span class="separadorindex">|</span>
-            <a href="carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
+            <a href="/carrito" class="cart-link" aria-label="Ver carrito de compras">🛒 Carrito</a>
             <span class="separadorindex">|</span>
             
             {% set rol_limpio = (rol or session.get('rol') or '')|string|trim|lower %}
@@ -56,7 +56,7 @@
 
             {% if nombre_usuario %}
                 <div class="usuario-dropdown">
-                    <button type="button" class="usuario-btn" onclick="toggleUsuarioMenu()" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="usuario-btn" aria-haspopup="true" aria-expanded="false">
                         {{ nombre_usuario }} 
                         <span class="role-badge">
                             {% if rol_limpio == 'superadmin' %}
@@ -68,19 +68,19 @@
                             {% endif %}
                         </span> ▾
                     </button>
-                    <div id="usuarioMenu" class="usuario-menu" aria-label="Menú de usuario">
+                    <div id="usuarioMenu" class="usuario-menu" role="menu" aria-label="Menú de usuario">
                         {% if rol_limpio in ['admin', 'superadmin'] %}
-                            <a href="{{ url_for('admin_inicio') }}">Panel Admin</a>
+                            <a href="{{ url_for('admin_inicio') }}" role="menuitem">Panel Admin</a>
                         {% else %}
-                            <a href="{{ url_for('vista_clientes') }}">Mi perfil</a>
+                            <a href="{{ url_for('vista_clientes') }}" role="menuitem">Mi perfil</a>
                         {% endif %}
-                        <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                        <a href="{{ url_for('logout') }}" role="menuitem">Cerrar Sesión</a>
                     </div>
                 </div>
             {% else %}
-                <a href="login" aria-label="Página de inicio de sesión">Login</a>
+                <a href="/login" aria-label="Página de inicio de sesión">Login</a>
             {% endif %}
-        </nav>                                                
+        </nav>                                                               
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -93,121 +93,123 @@
         {% endif %}
     {% endwith %}
 
-    <section class="hero">
-        <h2>¡Hosting a tu medida!</h2>
-        <p> Hosting para ti y para tú negocio, a un precio justo.</p>
-    </section>
+    <main>
+        <section class="hero">
+            <h2>¡Hosting a tu medida!</h2>
+            <p> Hosting para ti y para tu negocio, a un precio justo.</p>
+        </section>
 
-    <section class="info-hosting">
-        <div class="explicacion-caja-hosting">
-            <h2>¿Qué es Hosting?</h2>
-            <p>
-                El Hosting, también llamado "alojamiento web", es un alquiler de espacio en un servidor que es
-                seguro, potente y está conectado a internet las 24 horas. Su función es la de almacenar archivos, 
-                imágenes y bases de datos de un sitio web, permitiendo que sea accesible mundialmente.
-            </p>
-        </div>
-    </section>
+        <section class="info-hosting">
+            <div class="explicacion-caja-hosting">
+                <h2>¿Qué es Hosting?</h2>
+                <p>
+                    El Hosting, también llamado "alojamiento web", es un alquiler de espacio en un servidor que es
+                    seguro, potente y está conectado a internet las 24 horas. Su función es la de almacenar archivos, 
+                    imágenes y bases de datos de un sitio web, permitiendo que sea accesible mundialmente.
+                </p>
+            </div>
+        </section>
 
-    <section class="hosting-container">
-        <h2 class="titulo-seccion">Nuestros Servidores </h2>
-        <div class="hosting-grid">
-            {% if hostings %}
-                {% for h in hostings %}
-                    <div class="hosting-card" data-no-talkback="true">
-                        <h3>
-                            {{ h[1] }}
-                            {% if h[1] in productos_destacados.hosting %}
-                                <span class="badge-producto-destacado">Producto destacado</span>
-                            {% endif %}
-                            {% if h[4] %}
-                                <span class="badge-oferta-card">¡OFERTA!</span>
-                            {% endif %}
-                        </h3>
+        <section class="hosting-container">
+            <h2 class="titulo-seccion">Nuestros Servidores </h2>
+            <div class="hosting-grid">
+                {% if hostings %}
+                    {% for h in hostings %}
+                        <div class="hosting-card" data-no-talkback="true">
+                            <h3>
+                                {{ h[1] }}
+                                {% if h[1] in productos_destacados.hosting %}
+                                    <span class="badge-producto-destacado">Producto destacado</span>
+                                {% endif %}
+                                {% if h[4] %}
+                                    <span class="badge-oferta-card">¡OFERTA!</span>
+                                {% endif %}
+                            </h3>
 
-                        <div class="price-container">
-                            {% if h[4] %}
-                                <span class="precio-original-card">${{ "{:,}".format(h[3]|int).replace(',', '.') }}</span>
-                                <span class="precio-oferta-card">${{ "{:,}".format(h[4]|int).replace(',', '.') }}</span>
+                            <div class="price-container">
+                                {% if h[4] %}
+                                    <span class="precio-original-card">${{ "{:,}".format(h[3]|int).replace(',', '.') }}</span>
+                                    <span class="precio-oferta-card">${{ "{:,}".format(h[4]|int).replace(',', '.') }}</span>
+                                {% else %}
+                                    <span class="precio-normal-card">${{ "{:,}".format(h[3]|int).replace(',', '.') }}</span>
+                                {% endif %}
+                                <small>/ 6 meses</small>
+                            </div>
+
+                            <ul class="features">
+                                {% if 'Tierra' in h[1] %}
+                                    <li>Espacio: 2000 Megas</li>
+                                    <li>Transferencia Mes: 15000MB</li>
+                                {% elif 'Neptuno' in h[1] %}
+                                    <li>Espacio: 4000 Megas</li>
+                                    <li>Transferencia Mes: 20000MB</li>
+                                {% elif 'Urano' in h[1] %}
+                                    <li>Espacio: 6000 Megas</li>
+                                    <li>Transferencia Mes: 30000MB</li>
+                                {% elif 'Saturno' in h[1] %}
+                                    <li>Espacio: 8000 Megas</li>
+                                    <li>Transferencia Mes: 35000MB</li>
+                                {% elif 'Jupiter' in h[1] %}
+                                    <li>Espacio: 100 Megas</li>
+                                    <li>Transferencia Mes: 40000MB</li>
+                                {% else %}
+                                    <li>Espacio: 20000 Megas</li>
+                                    <li>Transferencia Mes: 200000MB</li>
+                                {% endif %}
+
+                                <li>WordPress LiteSpeed Cache</li>
+                                <li>Certificado SSL Gratis: SÍ</li>
+                                <li>Reg. Dominio .COM GRATIS: {% if 'Jupiter' in h[1] or 'PYMES' in h[1] %}SÍ{% else %}NO{% endif %}</li>
+                                <li>24/7 Full Cpanel, FTP</li>
+                            </ul>
+
+                            {% if rol_limpio in ['admin', 'superadmin'] %}
+                                <a href="/agregar/{{ h[0] }}" class="btn-buy admin-disabled" aria-label="Función no disponible para administradores">
+                                    No disponible para Admin
+                                </a>
                             {% else %}
-                                <span class="precio-normal-card">${{ "{:,}".format(h[3]|int).replace(',', '.') }}</span>
+                                <a href="/agregar/{{ h[0] }}" class="btn-buy" aria-label="Añadir plan {{ h[1] }} al carrito por {% if h[4] %}{{ h[4]|int }}{% else %}{{ h[3]|int }}{% endif %} pesos">
+                                    Añadir al Carrito
+                                </a>
                             {% endif %}
-                            <small>/ 6 meses</small>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="sin-planes-mensaje">No hay planes de hosting disponibles en este momento.</p>
+                {% endif %}
+            </div>
+        </section>
 
-                        <ul class="features">
-                            {% if 'Tierra' in h[1] %}
-                                <li>Espacio: 2000 Megas</li>
-                                <li>Transferencia Mes: 15000MB</li>
-                            {% elif 'Neptuno' in h[1] %}
-                                <li>Espacio: 4000 Megas</li>
-                                <li>Transferencia Mes: 20000MB</li>
-                            {% elif 'Urano' in h[1] %}
-                                <li>Espacio: 6000 Megas</li>
-                                <li>Transferencia Mes: 30000MB</li>
-                            {% elif 'Saturno' in h[1] %}
-                                <li>Espacio: 8000 Megas</li>
-                                <li>Transferencia Mes: 35000MB</li>
-                            {% elif 'Jupiter' in h[1] %}
-                                <li>Espacio: 100 Megas</li>
-                                <li>Transferencia Mes: 40000MB</li>
-                            {% else %}
-                                <li>Espacio: 20000 Megas</li>
-                                <li>Transferencia Mes: 200000MB</li>
-                            {% endif %}
+        <h2 class="titulo-beneficios">¿Por qué elegir nuestro Hosting?</h2>
 
-                            <li>WordPress LiteSpeed Cache</li>
-                            <li>Certificado SSL Gratis: SÍ</li>
-                            <li>Reg. Dominio .COM GRATIS: {% if 'Jupiter' in h[1] or 'PYMES' in h[1] %}SÍ{% else %}NO{% endif %}</li>
-                            <li>24/7 Full Cpanel, FTP</li>
-                        </ul>
+        <section class="beneficios">
+            <div class="beneficio-item" aria-label="Beneficio de seguridad: Disponibilidad de backups">
+                <span class="icon">💿</span>
+                <h3>Disponibilidad de Backups</h3>
+                <p>
+                    Completa disponibilidad de sus copias de seguridad realizadas por el servidor, a parte de las que usted puede realizar 
+                    cuando desee desde su CPanel.
+                </p>
+            </div>
 
-                        {% if rol_limpio in ['admin', 'superadmin'] %}
-                            <a href="/agregar/{{ h[0] }}" class="btn-buy admin-disabled" aria-label="Función no disponible para administradores">
-                                No disponible para Admin
-                            </a>
-                        {% else %}
-                            <a href="/agregar/{{ h[0] }}" class="btn-buy" aria-label="Añadir plan {{ h[1] }} al carrito por {% if h[4] %}{{ h[4]|int }}{% else %}{{ h[3]|int }}{% endif %} pesos">
-                                Añadir al Carrito
-                            </a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p class="sin-planes-mensaje">No hay planes de hosting disponibles en este momento.</p>
-            {% endif %}
-        </div>
-    </section>
+            <div class="beneficio-item" aria-label="Beneficio de estabilidad: 99.9% Server Uptime">
+                <span class="icon">☕</span>
+                <h3>99.9% Server Uptime</h3>
+                <p>
+                    Gracias a los diversos sensores de Hardware y Software, nuestros servidores se mantienen un alto tiempo On-Line.
+                </p>
+            </div>
 
-    <h2 class="titulo-beneficios">¿Por qué elegir nuestro Hosting?</h2>
-
-    <section class="beneficios">
-        <div class="beneficio-item" aria-label="Beneficio de seguridad: Disponibilidad de backups">
-            <span class="icon">💿</span>
-            <h3>Disponibilidad de Backups</h3>
-            <p>
-                Completa disponibilidad de sus copias de seguridad realizadas por el servidor, a parte de las que usted puede realizar 
-                cuando desee desde su CPanel.
-            </p>
-        </div>
-
-        <div class="beneficio-item" aria-label="Beneficio de estabilidad: 99.9% Server Uptime">
-            <span class="icon">☕</span>
-            <h3>99.9% Server Uptime</h3>
-            <p>
-                Gracias a los diversos sensores de Hardware y Software, nuestros servidores se mantienen un alto tiempo On-Line.
-            </p>
-        </div>
-
-        <div class="beneficio-item" aria-label="Beneficio de rendimiento: Hardware confiable">
-            <span class="icon">💻</span>
-            <h3>Hardware confiable</h3>
-            <p>
-                Arquitectura de gran rendimiento equipos de alto desempeño y de ultima tecnología
-                basados en actualizaciones sin demora.
-            </p>
-        </div>
-    </section>
+            <div class="beneficio-item" aria-label="Beneficio de rendimiento: Hardware confiable">
+                <span class="icon">💻</span>
+                <h3>Hardware confiable</h3>
+                <p>
+                    Arquitectura de gran rendimiento equipos de alto desempeño y de última tecnología
+                    basados en actualizaciones sin demora.
+                </p>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="footer-container">
@@ -228,20 +230,22 @@
                 <p><a href="mailto:soporte.dominiosfull@gmail.com" aria-label="Enviar correo electrónico a soporte.dominiosfull@gmail.com">soporte.dominiosfull@gmail.com</a></p>
             </div>
         </div>
+
         <div class="Whatsapp">
             <button class="Whatsapp-desplegable" aria-label="Abrir canales de atención de WhatsApp">
-                <img src="../static/img/whatsapp.png" width="100" height="100" alt="Logo de Whatsapp" loading="lazy">
+                <img src="/static/img/whatsapp.png" width="100" height="100" alt="Logo de Whatsapp" loading="lazy">
             </button>
             <div class="Whatsapp-menu">
-                <a href="https://wa.me/+573172293270" target="_blank" aria-label="Contactar con Atención al Cliente en WhatsApp"><p>Atención al Cliente</p></a>
-                <a href="https://wa.me/+573112913437" target="_blank" aria-label="Contactar con Soporte Técnico en WhatsApp"><p>Soporte Técnico</p></a>
-                <a href="https://wa.me/+573147991338" target="_blank" aria-label="Contactar con Marketing en WhatsApp"><p>Marketing</p></a>
-                <a href="https://wa.me/+573134138186" target="_blank" aria-label="Contactar con Ventas en WhatsApp"><p>Respuesta Rápida</p></a>
+                <a href="https://wa.me/+573172293270" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Atención al Cliente en WhatsApp"><p>Atención al Cliente</p></a>
+                <a href="https://wa.me/+573112913437" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Soporte Técnico en WhatsApp"><p>Soporte Técnico</p></a>
+                <a href="https://wa.me/+573147991338" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Marketing en WhatsApp"><p>Marketing</p></a>
+                <a href="https://wa.me/+573134138186" target="_blank" rel="noopener noreferrer" aria-label="Contactar con Ventas en WhatsApp"><p>Respuesta Rápida</p></a>
             </div>
         </div>
+
         <div class="Instagram">
-            <a href="https://www.instagram.com/dominios_full/" target="_blank" aria-label="Ir a nuestro perfil de Instagram">
-                <img src="../static/img/instagram.png" width="100" height="100" alt="Logo de Instagram" loading="lazy">
+            <a href="https://www.instagram.com/dominios_full/" target="_blank" rel="noopener noreferrer" aria-label="Ir a nuestro perfil de Instagram">
+                <img src="/static/img/instagram.png" width="100" height="100" alt="Logo de Instagram" loading="lazy">
             </a>
         </div>
         
@@ -250,11 +254,11 @@
         </div>
     </footer>
 
-    <script src="../static/js/menu.js" defer></script>
-    <script src="../static/js/whatsapp.js" defer></script>
-    <script src="../static/js/usuario-menu.js" defer></script>
-    <script src="../static/js/anuncio-carrito.js" defer></script>
+    <script src="/static/js/menu.js" defer></script>
+    <script src="/static/js/whatsapp.js" defer></script>
+    <script src="/static/js/usuario-menu.js" defer></script>
+    <script src="/static/js/anuncio-carrito.js" defer></script>
     <script src="/static/js/msn-flash.js" defer></script>
-    <script src="../static/js/talkback.js" defer></script>
+    <script src="/static/js/talkback.js" defer></script>
 </body>
 </html>

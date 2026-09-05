@@ -1,61 +1,69 @@
-// Animación del carrusel horizontal automático
-const trackOpiniones = document.getElementById('opinionesTrack');
-let posicionCarrusel = 0;
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Carrusel horizontal de opiniones
+    const trackOpiniones = document.getElementById('opinionesTrack');
+    let posicionCarrusel = 0;
 
-function moverCarruselOpiniones() {
-    if (!trackOpiniones || trackOpiniones.children.length <= 1) return;
-    
-    posicionCarrusel++;
-    if (posicionCarrusel >= trackOpiniones.children.length) {
-        posicionCarrusel = 0;
-    }
-    
-    const anchoTarjeta = trackOpiniones.children[0].offsetWidth + 20;
-    trackOpiniones.style.transform = `translateX(-${posicionCarrusel * anchoTarjeta}px)`;
-}
+    function moverCarruselOpiniones() {
+        if (!trackOpiniones || trackOpiniones.children.length <= 1) return;
 
-// Intervalo para desplazar las tarjetas cada cuatro segundos
-setInterval(moverCarruselOpiniones, 4000);
+        posicionCarrusel++;
+        if (posicionCarrusel >= trackOpiniones.children.length) {
+            posicionCarrusel = 0;
+        }
 
-// Funciones para el control de la ventana filtro
-function abrirFiltroOpiniones() {
-    const modal = document.getElementById('filtroOpiniones'); // Corregido: 'f' minúscula
-    if (modal) {
-        modal.classList.add('active');
-    }
-}
-
-function cerrarFiltroOpiniones() {
-    const modal = document.getElementById('filtroOpiniones'); // Corregido: 'f' minúscula
-    if (modal) {
-        modal.classList.remove('active');
-    }
-}
-
-// Filtrado dinámico de opiniones por estrellas
-function filtrarOpiniones(estrellas, evento) {
-    // Corregido: ahora selecciona .item-opinion-filtro que coincide con el HTML
-    const items = document.querySelectorAll('.item-opinion-filtro'); 
-    const botones = document.querySelectorAll('.btn-filtro');
-
-    botones.forEach(btn => btn.classList.remove('active'));
-    if (evento && evento.target) {
-        evento.target.classList.add('active');
+        const anchoTarjeta = trackOpiniones.children[0].offsetWidth + 20;
+        trackOpiniones.style.transform = `translateX(-${posicionCarrusel * anchoTarjeta}px)`;
     }
 
-    items.forEach(item => {
-        if (estrellas === 'todas' || item.getAttribute('data-estrellas') === estrellas) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
+    if (trackOpiniones) {
+        setInterval(moverCarruselOpiniones, 4000);
+    }
+
+    // 2. Control del modal y filtros de opiniones
+    const modalFiltro = document.getElementById('filtroOpiniones');
+    const btnAbrirModal = document.getElementById('btnAbrirFiltro');
+    const btnCerrarModal = document.getElementById('btnCerrarFiltro');
+    const botonesFiltro = document.querySelectorAll('.btn-filtro');
+    const itemsOpiniones = document.querySelectorAll('.item-opinion-filtro');
+
+    // Abrir modal
+    if (btnAbrirModal && modalFiltro) {
+        btnAbrirModal.addEventListener('click', () => {
+            modalFiltro.classList.add('active');
+        });
+    }
+
+    // Cerrar modal
+    if (btnCerrarModal && modalFiltro) {
+        btnCerrarModal.addEventListener('click', () => {
+            modalFiltro.classList.remove('active');
+        });
+    }
+
+    // Cierre al hacer clic fuera del contenido del modal
+    window.addEventListener('click', (event) => {
+        if (event.target === modalFiltro) {
+            modalFiltro.classList.remove('active');
         }
     });
-}
 
-// Cierre del filtro al interactuar fuera del contenido principal
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('filtroOpiniones'); // Corregido: 'f' minúscula
-    if (event.target === modal) {
-        cerrarFiltroOpiniones();
-    }
+    // Filtrado dinámico por estrellas
+    botonesFiltro.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const estrellas = boton.getAttribute('data-filtro');
+
+            // Cambia el estado activo visual
+            botonesFiltro.forEach(b => b.classList.remove('active'));
+            boton.classList.add('active');
+
+            // Oculta/Muestra las opiniones según la selección
+            itemsOpiniones.forEach(item => {
+                if (estrellas === 'todas' || item.getAttribute('data-estrellas') === estrellas) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
 });

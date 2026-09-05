@@ -1,57 +1,65 @@
-// Funciones para ordenamiento y filtrado de dominios
-function obtenerPrecio(fila) {
-    const precio = Number(fila.dataset.precio || 0);
-    return Number.isFinite(precio) ? precio : 0;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const listaDominios = document.getElementById('lista-dominios');
+    if (!listaDominios) return;
 
-function ordenarDominios(criteria) {
-    const lista = document.getElementById('lista-dominios');
-    if (!lista) return;
-
-    const filas = Array.from(lista.querySelectorAll('.fila-dominio'));
-    const filasVisibles = filas.filter(fila => !fila.classList.contains('sin-dominios') && window.getComputedStyle(fila).display !== 'none');
-    const filasOcultas = filas.filter(fila => fila.classList.contains('sin-dominios') || window.getComputedStyle(fila).display === 'none');
-
-    const filasOrdenadas = [...filasVisibles];
-
-    if (criteria === 'precio-asc') {
-        filasOrdenadas.sort((a, b) => obtenerPrecio(a) - obtenerPrecio(b));
-    } else if (criteria === 'precio-desc') {
-        filasOrdenadas.sort((a, b) => obtenerPrecio(b) - obtenerPrecio(a));
-    } else if (criteria === 'nombre-asc') {
-        filasOrdenadas.sort((a, b) => (a.dataset.nombre || '').localeCompare(b.dataset.nombre || '', 'es', { sensitivity: 'base' }));
-    } else if (criteria === 'nombre-desc') {
-        filasOrdenadas.sort((a, b) => (b.dataset.nombre || '').localeCompare(a.dataset.nombre || '', 'es', { sensitivity: 'base' }));
-    }
-
-    filas.forEach(fila => fila.remove());
-    [...filasOrdenadas, ...filasOcultas].forEach(fila => lista.appendChild(fila));
-}
-
-function filtrar(categoria, btn) {
-    document.querySelectorAll('.filtros .btn-filtro').forEach(b => b.classList.remove('activo'));
-    btn.classList.add('activo');
-
-    const lista = document.getElementById('lista-dominios');
-    lista?.classList.toggle('mostrar-todos', categoria === 'todos');
-
-    document.querySelectorAll('#lista-dominios .fila-dominio').forEach(fila => {
-        if (fila.classList.contains('sin-dominios')) {
-            fila.style.display = 'grid';
-            return;
-        }
-
-        if (categoria === 'todos') {
-            fila.style.display = 'grid';
-        } else {
-            fila.style.display = fila.classList.contains('popular') ? 'grid' : 'none';
-        }
+    // Guardar el orden original exacto con el que la plantilla renderizó los dominios
+    const filasDominios = Array.from(listaDominios.querySelectorAll('.fila-dominio'));
+    filasDominios.forEach((fila, index) => {
+        fila.dataset.ordenOriginal = index;
     });
 
-    ordenarDominios(document.getElementById('ordenar-dominios')?.value || 'default');
-}
+    const selectOrden = document.getElementById('ordenar-dominios');
+    const btnsFiltro = document.querySelectorAll('.btn-filtro');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const botonPopulares = document.querySelector('.filtros .btn-filtro');
-    if (botonPopulares) filtrar('popular', botonPopulares);
+    // Función para ordenar las filas
+    function ordenarDominios(criterio) {
+        const filasActuales = Array.from(listaDominios.querySelectorAll('.fila-dominio'));
+
+        filasActuales.sort((a, b) => {
+            if (criterio === 'precio-asc') {
+                return parseFloat(a.dataset.precio) - parseFloat(b.dataset.precio);
+            } else if (criterio === 'precio-desc') {
+                return parseFloat(b.dataset.precio) - parseFloat(a.dataset.precio);
+            } else if (criterio === 'nombre-asc') {
+                return a.dataset.nombre.localeCompare(b.dataset.nombre);
+            } else if (criterio === 'nombre-desc') {
+                return b.dataset.nombre.localeCompare(a.dataset.nombre);
+            } else {
+                // 'default' / Predeterminado: Restaura el orden inicial asignado
+                return parseInt(a.dataset.ordenOriginal) - parseInt(b.dataset.ordenOriginal);
+            }
+        });
+
+        // Reinsertar en el contenedor con la nueva secuencia
+        filasActuales.forEach(fila => listaDominios.appendChild(fila));
+    }
+
+    // Función para filtrar por tipo (Populares / Todos)
+    function filtrar(tipo, botonActivo) {
+        btnsFiltro.forEach(btn => btn.classList.remove('activo'));
+        botonActivo.classList.add('activo');
+
+        filasDominios.forEach(fila => {
+            if (tipo === 'popular') {
+                fila.style.display = fila.classList.contains('popular') ? '' : 'none';
+            } else {
+                fila.style.display = '';
+            }
+        });
+    }
+
+    // Escuchador de eventos para el selector de orden
+    if (selectOrden) {
+        selectOrden.addEventListener('change', (e) => {
+            ordenarDominios(e.target.value);
+        });
+    }
+
+    // Escuchadores de eventos para los botones de filtrado
+    btnsFiltro.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tipo = btn.getAttribute('data-filtro');
+            filtrar(tipo, btn);
+        });
+    });
 });

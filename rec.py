@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, session
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from werkzeug.security import generate_password_hash
@@ -9,10 +9,29 @@ rec_bp = Blueprint('recuperar', __name__, template_folder='templates')
 def obtener_serializer():
     # Genera el encriptador firmado usando la clave secreta global de Flask.
     return URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+#Redirección si ya existe una sesión activa
+def verificar_sesion_activa():
+    if 'user_id' in session:
+        rol = str(session.get('rol', '')).strip().lower()
+        estado = str(session.get('estado', '')).strip().lower()
+
+        if estado == 'suspendido':
+            if rol in ['admin', 'superadmin']:
+                return redirect(url_for('admin_suspendido'))
+            return redirect(url_for('cuenta_suspendida'))
+
+        if rol in ['admin', 'superadmin']:
+            return redirect(url_for('admin_inicio'))
+        return redirect(url_for('vista_clientes'))
 
 
 @rec_bp.route('/recuperar', methods=['GET', 'POST'])
 def recuperar():
+   # REDIRECCIÓN SI YA EXISTE UNA SESIÓN ACTIVA
+    redireccion = verificar_sesion_activa()
+    if redireccion:
+        return redireccion 
+    
     # Valida el tipo de petición enviada por el usuario.
     if request.method == 'POST':
         # Extrae el correo electrónico ingresado en el formulario.
